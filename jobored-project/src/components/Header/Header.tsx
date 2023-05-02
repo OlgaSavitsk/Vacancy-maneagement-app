@@ -23,6 +23,7 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     margin: '0 auto',
+    padding: 0,
 
     [theme.fn.smallerThan('sm')]: {
       justifyContent: 'space-between',
@@ -109,7 +110,7 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
   ));
 
   return (
-    <Box pb={120}>
+    <Box>
       <Header height={84} px="md">
         <Container className={classes.inner}>
           <Group sx={{ height: '100%' }}>
@@ -120,6 +121,7 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
           <Group sx={{ height: '100%', flexGrow: 1 }} spacing={0} position="center" className={classes.hiddenMobile}>
             {menuItems}
           </Group>
+          
           <Burger opened={opened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
           <Transition transition="pop-top-right" duration={200} mounted={opened}>
             {(styles) => (

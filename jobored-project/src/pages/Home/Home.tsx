@@ -1,67 +1,49 @@
-import { createStyles, rem } from "@mantine/core";
+import { Box, createStyles, Group, rem } from '@mantine/core';
+import { VacancyCard } from 'components/Card/VacancyCard';
+import { FilterForm } from 'components/Filter/Filter';
+import { SearchField } from 'components/Search/SearchField';
 
-const useStyles = createStyles((theme) => ({
-    inner: {
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-        paddingLeft: theme.spacing.md,
-        paddingRight: theme.spacing.md,
-        textDecoration: 'none',
-        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-        fontWeight: 500,
-        fontSize: theme.fontSizes.sm,
-
-        [theme.fn.smallerThan('sm')]: {
-            height: rem(42),
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%',
-        },
-
-        ...theme.fn.hover({
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-        }),
-    },
-
-    subLink: {
-        width: '100%',
-        padding: `${theme.spacing.xs} ${theme.spacing.md}`,
-        borderRadius: theme.radius.md,
-
-        ...theme.fn.hover({
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-        }),
-
-        '&:active': theme.activeStyles,
-    },
-
-    dropdownFooter: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-        margin: `calc(${theme.spacing.md} * -1)`,
-        marginTop: theme.spacing.sm,
-        padding: `${theme.spacing.md} calc(${theme.spacing.md} * 2)`,
-        paddingBottom: theme.spacing.xl,
-        borderTop: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-            }`,
-    },
-
-    hiddenMobile: {
-        [theme.fn.smallerThan('sm')]: {
-            display: 'none',
-        },
-    },
-
-    hiddenDesktop: {
-        [theme.fn.largerThan('sm')]: {
-            display: 'none',
-        },
-    },
+const useStyles = createStyles(() => ({
+  container: {
+    display: 'flex',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    width: '100%',
+    background: '#F7F7F8'
+  },
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    columnGap: '1.75rem',
+    maxWidth: rem(1156),
+    width: '100%',
+    height: '100%',
+    margin: '0 auto',
+    padding: '0 1rem',
+  },
+  inner: {
+    flexDirection: 'column',
+    alignItems: 'start',
+    flexGrow: 1,
+    rowGap: rem(12),
+    '& > div': {
+      width: '100%',
+    }
+  }
 }));
 
 export const Home = () => {
-    const { classes } = useStyles()
-    return (
-        <div></div>
-    )
-}
+  const { classes } = useStyles();
+  return (
+    <div className={classes.container}>
+      <Box className={classes.wrapper} mt={40}>
+        <FilterForm />
+        <Group className={classes.inner}>
+          <SearchField />
+          <VacancyCard />
+        </Group>
+      </Box>
+    </div>
+  );
+};
