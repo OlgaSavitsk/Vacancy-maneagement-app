@@ -25,6 +25,11 @@ function GlobalStyles() {
             borderRadius: '0.5rem',
           },
         },
+        ul: {
+          display: 'flex',
+          flexDirection: 'column',
+          listStyleType: "none",
+        }
       })}
     />
   );
@@ -56,7 +61,7 @@ function App() {
         fontFamily: 'Inter, sans-serif',
         headings: {
           sizes: {
-            h4: { fontWeight: 400, fontSize: '1rem', lineHeight: 1.25 },
+            h4: { fontWeight: 400, fontSize: '1rem', lineHeight: 1.25, fontFamily: 'Inter, sans-serif', },
           },
         },
       }}

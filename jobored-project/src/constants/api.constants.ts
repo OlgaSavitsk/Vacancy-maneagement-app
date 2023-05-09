@@ -11,5 +11,15 @@ export const DEFAULT_AUTH_REFRESH_PARAMS = {
   client_secret: DEFAULT_AUTH_PARAMS.client_secret,
 };
 
-export const AUTH_PATH = '/2.0/oauth2/password';
-export const REFRESH_TOKEN_PATH = '/2.0/oauth2/refresh_token';
+export const AUTH_PATH = 'oauth2/password';
+export const REFRESH_TOKEN_PATH = 'oauth2/refresh_token';
+
+export enum VACANCY_PARAMS {
+  published = 1,
+  keyword,
+  payment_from,
+  payment_to,
+  catalogues = 33,
+}
+
+export const VACANCY_API_PATH = 'vacancies/'

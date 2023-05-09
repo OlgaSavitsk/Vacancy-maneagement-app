@@ -10,13 +10,21 @@ interface InterceptorProps {
 }
 
 export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
-  const [token, setToken] = useLocalState(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
+  const [token, setToken] = useLocalState(
+    LocalStorageKey.authToken,
+    DEFAULT_STORAGE_CONFIG,
+  );
 
-  const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+  const createHeaderConfig = (config: InternalAxiosRequestConfig) => {
     config.headers['x-secret-key'] = import.meta.env.VITE_SECRET_KEY;
+    config.headers['X-Api-App-Id'] = import.meta.env.VITE_API_CLIENT_SECRET;
     if (token) {
       config.headers['Authorization'] = `Bearer ${token.access_token}`;
     }
+  };
+
+  const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    createHeaderConfig(config);  
     return config;
   };
 
@@ -24,15 +32,19 @@ export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
     return Promise.reject(error);
   };
 
-  const requestInterceptor = baseInstance.interceptors.request.use(onRequest, onRequestError);
+  const requestInterceptor = baseInstance.interceptors.request.use(
+    onRequest,
+    onRequestError,
+  );
 
   useEffect(() => {
-
     const onResponse = (response: AxiosResponse): AxiosResponse => {
       return response;
     };
 
-    const onResponseError = async (error: AxiosError): Promise<AxiosError | undefined> => {
+    const onResponseError = async (
+      error: AxiosError,
+    ): Promise<AxiosError | undefined> => {
       if (error.response) {
         if (error.response.status === 410) {
           try {
@@ -47,7 +59,10 @@ export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
       return Promise.reject(error);
     };
 
-    const responseInterceptor = baseInstance.interceptors.response.use(onResponse, onResponseError);
+    const responseInterceptor = baseInstance.interceptors.response.use(
+      onResponse,
+      onResponseError,
+    );
 
     return () => {
       baseInstance.interceptors.request.eject(requestInterceptor);

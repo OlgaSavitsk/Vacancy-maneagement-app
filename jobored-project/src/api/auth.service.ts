@@ -3,7 +3,7 @@ import {
   DEFAULT_AUTH_PARAMS,
   DEFAULT_AUTH_REFRESH_PARAMS,
   REFRESH_TOKEN_PATH,
-} from 'constants/auth';
+} from 'constants/api.constants';
 import { AuthResponse } from 'core/models/auth.model';
 import { getRequest, baseInstance } from './api-base.service';
 

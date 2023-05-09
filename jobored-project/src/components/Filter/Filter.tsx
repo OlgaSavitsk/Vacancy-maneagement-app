@@ -41,7 +41,7 @@ export const FilterForm = () => {
   });
 
   return (
-    <Paper maw={315} p="lg" radius="md" withBorder>
+    <Paper maw={315} p="lg" radius="md" withBorder sx={{ alignSelf: 'start', minHeight: '360px' }}>
       <Group sx={{ display: 'flex' }}>
         <Text weight={700} fz={20}>
           Фильтры

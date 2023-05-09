@@ -12,9 +12,9 @@ import {
   Paper,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { HeaderLinkProps } from 'core/models/header.model';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HeaderLinkProps } from 'shared/models/header';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -121,7 +121,7 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
           <Group sx={{ height: '100%', flexGrow: 1 }} spacing={0} position="center" className={classes.hiddenMobile}>
             {menuItems}
           </Group>
-          
+
           <Burger opened={opened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
           <Transition transition="pop-top-right" duration={200} mounted={opened}>
             {(styles) => (

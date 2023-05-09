@@ -6,10 +6,9 @@ export function getStorageValue<T>(key: string, initialValue: T | (() => T)) {
     const storageValue = window.localStorage.getItem(key);
 
     if (storageValue) return JSON.parse(storageValue);
+    //return initialValue instanceof Function ? initialValue() : initialValue;
   } catch (error) {
-    if (initialValue) {
-      return initialValue instanceof Function ? initialValue() : initialValue;
-    }
+    return initialValue instanceof Function ? initialValue() : initialValue;
   }
 }
 

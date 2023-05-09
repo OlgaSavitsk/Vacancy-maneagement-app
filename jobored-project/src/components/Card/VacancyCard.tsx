@@ -1,31 +1,48 @@
-import { Card, Group, Title, Image } from "@mantine/core";
-import { IconMapPin } from "@tabler/icons-react";
+import { Card, Group, Image, Text } from '@mantine/core';
+import { IconMapPin } from '@tabler/icons-react';
+import { VacancyInfo } from 'core/models/vacancy.model';
+import { renderVacancyPayment } from '../../utils/helpers';
 
-export const VacancyCard = () => {
+type VacancyProps = {
+  vacancy: VacancyInfo;
+};
+
+export const VacancyCard = ({
+  vacancy: { profession, town, type_of_work, payment_to, payment_from, currency },
+}: VacancyProps) => {
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" h={137} withBorder>
-      <Group sx={{ justifyContent: 'space-between' }}>
-        <Title order={3} color="blue.5" size='1.125rem'>
-          Underlined h4 heading with blue color
-        </Title>
-        <Image width={22} src="./src/assets/star.svg" alt="favourite" />
-      </Group>
-      <Group mt="sm">
-        <Title order={4} sx={{ fontWeight: 600 }} >
-          з/п от rub
-        </Title>
-        <Title order={4} size='1.125rem' sx={{ color: '#7B7C88' }}>&bull;</Title>
-        <Title order={4} sx={{ fontWeight: 400 }}>
-          Полный рабочий день
-        </Title>
-      </Group>
+    <Card shadow="sm" p="xl" radius="md" mih={137} withBorder>
+      <Group
+        sx={{
+          flexWrap: 'nowrap',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Group spacing={12} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+          <Group>
+            <Text fw={600} color="blue.5" size="1.125rem">
+              {profession}
+            </Text>
+          </Group>
+          
+          <Group spacing={12}>
+            <Text fw={600}>
+              з/п {renderVacancyPayment(payment_from, payment_to, currency)}
+            </Text>
+            <Text size="1.125rem" c="#7B7C88">
+              &bull;
+            </Text>
+            <Text fw={400}>{type_of_work.title}</Text>
+          </Group>
 
-      <Group position='left' mt="sm">
-        <IconMapPin size='1.25rem' color="#ACADB9" strokeWidth={1.5} />
-        <Title order={4} sx={{ fontWeight: 400 }}>
-          Yjdsq ehtyujq
-        </Title>
+          <Group position="left" spacing={8}>
+            <IconMapPin size="1.25rem" color="#ACADB9" strokeWidth={1.5} />
+            <Text fw={400}>{town.title}</Text>
+          </Group>
+        </Group>
+        <Image width={22} src="./src/assets/star.svg" alt="favourite" />
       </Group>
     </Card>
   );
