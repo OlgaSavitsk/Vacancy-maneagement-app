@@ -6,8 +6,8 @@ export const renderVacancyPayment = (
   if (payment_from && payment_to) {
     return `${payment_from}-${payment_to} ${currency}`;
   }
-  if (!payment_from && payment_to) {
-    return `от ${payment_to} ${currency}`;
+  if (!payment_from && !payment_to) {
+    return 'не указана';  
   }
-  return 'не указана';
+  return `от ${payment_from || payment_to} ${currency}`;
 };

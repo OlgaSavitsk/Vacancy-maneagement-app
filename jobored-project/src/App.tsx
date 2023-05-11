@@ -28,8 +28,8 @@ function GlobalStyles() {
         ul: {
           display: 'flex',
           flexDirection: 'column',
-          listStyleType: "none",
-        }
+          listStyleType: 'none',
+        },
       })}
     />
   );
@@ -38,7 +38,7 @@ function GlobalStyles() {
 function App() {
   const [token, setToken] = useLocalState(
     LocalStorageKey.authToken,
-    DEFAULT_STORAGE_CONFIG
+    DEFAULT_STORAGE_CONFIG,
   );
 
   const handleAuth = useCallback(async () => {
@@ -61,7 +61,21 @@ function App() {
         fontFamily: 'Inter, sans-serif',
         headings: {
           sizes: {
-            h4: { fontWeight: 400, fontSize: '1rem', lineHeight: 1.25, fontFamily: 'Inter, sans-serif', },
+            h4: {
+              fontWeight: 400,
+              fontSize: '1rem',
+              lineHeight: 1.25,
+              fontFamily: 'Inter, sans-serif',
+            },
+          },
+        },
+        components: {
+          Option: {
+            styles: {
+              option: {
+                backgroundColor: '#5E96FC',
+              },
+            },
           },
         },
       }}

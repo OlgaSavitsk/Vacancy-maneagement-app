@@ -6,7 +6,6 @@ export interface VacancyData {
 export interface VacancyInfo {
   id: number;
   profession: string;
-  firm_name: string;
   town: {
     title: string;
   };
@@ -15,4 +14,15 @@ export interface VacancyInfo {
   payment_to: number;
   payment_from: number;
   currency: string;
+}
+
+export interface IndustryInfo {
+  title: string,
+  key: number
+}
+
+export interface FilterValue {
+  selectKey: number[];
+  from: number;
+  to: number;
 }

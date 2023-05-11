@@ -1,61 +1,78 @@
-import { Text, Button, Group, MultiSelect, CloseButton, createStyles, NumberInput, Paper } from '@mantine/core';
+import {
+  Text,
+  Button,
+  Group,
+  CloseButton,
+  NumberInput,
+  Paper,
+  MultiSelect,
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { IconChevronDown } from '@tabler/icons-react';
+import { getIndustryValue } from 'api/filter.service';
+import { FilterValue, IndustryInfo } from 'core/models/vacancy.model';
+import { useEffect, useState } from 'react';
+import { useFilterStyles } from './styles';
 
-const useStyles = createStyles(() => ({
-  close: {
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'end',
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: 500,
-    fontSize: '0.875rem',
-    lineHeight: '1.25rem',
-    '&:before': {
-      content: '"Сбросить все"',
-      paddingRight: '7px',
-    },
-  },
-  label: {
-    fontWeight: 700,
-    fontSize: '1rem',
-    lineHeight: '1.25rem',
-  },
-  field: {
-    width: '100%',
-    borderRadius: '0.5rem',
-  },
-}));
+type FilterProps = {
+  onChangeFilterValue: (filterValue: FilterValue) => void;
+};
 
-export const FilterForm = () => {
-  const { classes } = useStyles();
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false,
-    },
+interface IFormValue {
+  select: string[];
+  from: number;
+  to: number;
+}
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    },
-  });
+export const FilterForm = ({ onChangeFilterValue }: FilterProps) => {
+  const { classes } = useFilterStyles();
+  const [industryData, setIndustryData] = useState<IndustryInfo[]>([]);
+  const form = useForm<IFormValue>();
+
+  const handleSubmit = async (values: IFormValue): Promise<void> => {
+    try {
+      const filterKeyValue = industryData
+        .filter((value) => values.select.includes(value.title))
+        .map((val) => val.key);
+      onChangeFilterValue({ ...values, selectKey: filterKeyValue });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getIndustryValue();
+      setIndustryData(data);
+    };
+    fetch();
+  }, []);
 
   return (
-    <Paper maw={315} p="lg" radius="md" withBorder sx={{ alignSelf: 'start', minHeight: '360px' }}>
+    <Paper
+      maw={315}
+      p="lg"
+      radius="md"
+      withBorder
+      sx={{ alignSelf: 'start', minHeight: '360px' }}
+    >
       <Group sx={{ display: 'flex' }}>
         <Text weight={700} fz={20}>
           Фильтры
         </Text>
         <CloseButton className={classes.close} aria-label="Close modal" iconSize={12} />
       </Group>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <MultiSelect
-          data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
           label="Отрасль"
           placeholder="Выберите отрасль"
+          data={industryData.map((industry) => industry.title)}
           classNames={{ label: classes.label }}
-          pt={30}
-          radius={8}
+          rightSection={<IconChevronDown size="1rem" />}
+          dropdownPosition="bottom"
+          disableSelectedItemFiltering
+          maxSelectedValues={1}
+          {...form.getInputProps('select')}
         />
         <Group sx={{ width: '100%' }} pt="lg">
           <NumberInput
@@ -64,6 +81,7 @@ export const FilterForm = () => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             classNames={{ label: classes.label, root: classes.field }}
+            {...form.getInputProps('from')}
           />
 
           <NumberInput
@@ -71,6 +89,7 @@ export const FilterForm = () => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             classNames={{ root: classes.field }}
+            {...form.getInputProps('to')}
           />
         </Group>
         <Group position="center" mt="lg">

@@ -23,3 +23,4 @@ export enum VACANCY_PARAMS {
 }
 
 export const VACANCY_API_PATH = 'vacancies/'
+export const INDUSTRY_API_PATH = 'catalogues/'
