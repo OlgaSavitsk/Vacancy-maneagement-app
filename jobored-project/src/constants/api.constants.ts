@@ -1,3 +1,6 @@
+import { VacancyFilterParams } from "core/models/vacancy.model";
+import { PAGE_SIZE } from "./common.constants";
+
 export const DEFAULT_AUTH_PARAMS = {
   login: import.meta.env.VITE_API_LOGIN,
   password: import.meta.env.VITE_API_PASSWORD,
@@ -14,13 +17,12 @@ export const DEFAULT_AUTH_REFRESH_PARAMS = {
 export const AUTH_PATH = 'oauth2/password';
 export const REFRESH_TOKEN_PATH = 'oauth2/refresh_token';
 
-export enum VACANCY_PARAMS {
-  published = 1,
-  keyword,
-  payment_from,
-  payment_to,
-  catalogues = 33,
-}
+export const VACANCY_FILTER_PARAMS: VacancyFilterParams = {
+  page: 0,
+  count: PAGE_SIZE,
+  published: 1,
+  //no_agreement: 1
+};
 
 export const VACANCY_API_PATH = 'vacancies/'
 export const INDUSTRY_API_PATH = 'catalogues/'

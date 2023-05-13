@@ -10,34 +10,37 @@ import {
 import { useForm } from '@mantine/form';
 import { IconChevronDown } from '@tabler/icons-react';
 import { getIndustryValue } from 'api/filter.service';
-import { FilterValue, IndustryInfo } from 'core/models/vacancy.model';
+import { setParamsValue, useParams } from 'store/reducer';
+import { IndustryInfo } from 'core/models/vacancy.model';
 import { useEffect, useState } from 'react';
 import { useFilterStyles } from './styles';
 
-type FilterProps = {
-  onChangeFilterValue: (filterValue: FilterValue) => void;
-};
-
 interface IFormValue {
-  select: string[];
-  from: number;
-  to: number;
+  catalogues: string[];
+  payment_from: number;
+  payment_to: number;
 }
 
-export const FilterForm = ({ onChangeFilterValue }: FilterProps) => {
-  const { classes } = useFilterStyles();
+export const FilterForm = () => {
+  const { dispatch } = useParams();
   const [industryData, setIndustryData] = useState<IndustryInfo[]>([]);
+  const { classes } = useFilterStyles();
+
   const form = useForm<IFormValue>();
 
   const handleSubmit = async (values: IFormValue): Promise<void> => {
     try {
-      const filterKeyValue = industryData
-        .filter((value) => values.select.includes(value.title))
-        .map((val) => val.key);
-      onChangeFilterValue({ ...values, selectKey: filterKeyValue });
+      values.catalogues &&
+        dispatch(setParamsValue({ ...values, catalogues: setIndustryValue(values) }));
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const setIndustryValue = (values: IFormValue): number[] => {
+    return industryData
+      .filter((value) => values.catalogues.includes(value.title))
+      .map((val) => val.key);
   };
 
   useEffect(() => {
@@ -72,7 +75,7 @@ export const FilterForm = ({ onChangeFilterValue }: FilterProps) => {
           dropdownPosition="bottom"
           disableSelectedItemFiltering
           maxSelectedValues={1}
-          {...form.getInputProps('select')}
+          {...form.getInputProps('catalogues')}
         />
         <Group sx={{ width: '100%' }} pt="lg">
           <NumberInput
@@ -81,7 +84,7 @@ export const FilterForm = ({ onChangeFilterValue }: FilterProps) => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             classNames={{ label: classes.label, root: classes.field }}
-            {...form.getInputProps('from')}
+            {...form.getInputProps('payment_from')}
           />
 
           <NumberInput
@@ -89,7 +92,7 @@ export const FilterForm = ({ onChangeFilterValue }: FilterProps) => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             classNames={{ root: classes.field }}
-            {...form.getInputProps('to')}
+            {...form.getInputProps('payment_to')}
           />
         </Group>
         <Group position="center" mt="lg">

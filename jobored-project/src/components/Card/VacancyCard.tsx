@@ -3,14 +3,13 @@ import { IconMapPin } from '@tabler/icons-react';
 import { VacancyInfo } from 'core/models/vacancy.model';
 import { renderVacancyPayment } from '../../utils/helpers';
 
+type VacancyProps = {
+  vacancy: VacancyInfo;
+};
+
 export const VacancyCard = ({
-  profession,
-  town,
-  type_of_work,
-  payment_to,
-  payment_from,
-  currency,
-}: VacancyInfo) => {
+  vacancy: { profession, town, type_of_work, payment_to, payment_from, currency },
+}: VacancyProps) => {
   return (
     <Card shadow="sm" p="xl" radius="md" mih={137} withBorder>
       <Group

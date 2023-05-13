@@ -1,17 +1,15 @@
 import { Button, CloseButton, rem, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
+import { setParamsValue, useParams } from 'store/reducer';
 import { useState } from 'react';
 
-type SearchProps = {
-  onChange: (searchInput: string) => void;
-};
-
-export const SearchField = ({ onChange }: SearchProps) => {
+export const SearchField = () => {
+  const { dispatch } = useParams();
   const [searchInput, setSearchInput] = useState('');
 
   const handleSearchInputClick = async (): Promise<void> => {
     if (searchInput) {
-      onChange(searchInput);
+      dispatch(setParamsValue({ keyword: searchInput }));
     }
   };
 

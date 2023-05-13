@@ -21,8 +21,15 @@ export interface IndustryInfo {
   key: number
 }
 
-export interface FilterValue {
-  selectKey: number[];
-  from: number;
-  to: number;
+export type VacancyFilterParams = {
+  count: number,
+  published: number,
+} & FilterParams
+
+export type FilterParams = {
+  page?: number
+  keyword?: string,
+  catalogues?: number[],
+  payment_from?: number,
+  payment_to?: number,
 }
