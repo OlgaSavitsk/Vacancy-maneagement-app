@@ -17,19 +17,23 @@ export interface VacancyInfo {
 }
 
 export interface IndustryInfo {
-  title: string,
-  key: number
+  title: string;
+  key: number;
 }
 
 export type VacancyFilterParams = {
-  count: number,
-  published: number,
-} & FilterParams
+  count: number;
+  published: number;
+} & FilterParams;
 
 export type FilterParams = {
-  page?: number
-  keyword?: string,
-  catalogues?: number[],
-  payment_from?: number,
-  payment_to?: number,
+  page?: number;
+  keyword?: string;
+  catalogues?: number[];
+  payment_from?: number;
+  payment_to?: number;
+};
+
+export interface Favorites {
+  ids: number[];
 }

@@ -2,6 +2,7 @@ import { FilterParams } from 'core/models/vacancy.model';
 
 export enum ActionType {
   SetParams,
+  AddFavorites,
 }
 
 export interface SetParams {
@@ -9,4 +10,9 @@ export interface SetParams {
   payload: FilterParams;
 }
 
-export type AppAction = SetParams;
+export interface AddFavorites {
+  type: ActionType.AddFavorites;
+  payload: number;
+}
+
+export type AppAction = SetParams | AddFavorites;

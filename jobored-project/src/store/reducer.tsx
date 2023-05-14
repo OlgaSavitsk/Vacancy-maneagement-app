@@ -1,12 +1,21 @@
 import { FilterParams } from 'core/models/vacancy.model';
 import { createContext, useContext, useReducer } from 'react';
-import { ActionType, AppAction, SetParams } from './actions';
+import { ActionType, AddFavorites, AppAction, SetParams } from './actions';
 import { AppState, InitialAppState } from './state';
 
-const appReducer = (state: AppState, action: SetParams): AppState => {
+const appReducer = (state: AppState, action: AppAction): AppState => {
   switch (action.type) {
     case ActionType.SetParams:
-      return { ...state, params: {...state.params, ...action.payload} };
+      return { ...state, params: { ...state.params, ...action.payload } };
+    case ActionType.AddFavorites: {
+      let { ids } = state.favorites;
+      if (state.favorites.ids.includes(action.payload)) {
+        ids = ids.filter((fav) => fav !== action.payload);
+      } else {
+        ids = [...state.favorites.ids, action.payload];
+      }
+      return { ...state, favorites: { ids: [...ids] } };
+    }
     default:
       return state;
   }
@@ -24,7 +33,12 @@ const VacancyContext = createContext<{
 
 export const setParamsValue = (params: FilterParams): SetParams => ({
   type: ActionType.SetParams,
-  payload: params
+  payload: params,
+});
+
+export const addFavoriteId = (id: number): AddFavorites => ({
+  type: ActionType.AddFavorites,
+  payload: id,
 });
 
 interface Props {
