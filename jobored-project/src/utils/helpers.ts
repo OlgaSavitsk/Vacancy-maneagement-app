@@ -15,7 +15,7 @@ export const renderVacancyPayment = (
   return `от ${payment_from || payment_to} ${currency}`;
 };
 
-export const createFavoritesFromStorage = (): number[] => {
-  const { ids } = getStorageValue(LocalStorageKey.favoritesId, DEFAULT_FAVORITES) || [];
-  return Object.values(ids).flat() as number[];
+export const getInitialState = (): number[] => {
+  const { ids } = getStorageValue(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
+  return ids;
 };

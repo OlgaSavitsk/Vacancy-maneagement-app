@@ -1,5 +1,7 @@
+import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage';
 import { FilterParams } from 'core/models/vacancy.model';
-import { createContext, useContext, useReducer } from 'react';
+import { useLocalState } from 'hooks/useLocalState';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { ActionType, AddFavorites, AppAction, SetParams } from './actions';
 import { AppState, InitialAppState } from './state';
 
@@ -47,6 +49,12 @@ interface Props {
 
 export const AppProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(appReducer, InitialAppState);
+  const [idsValue, setIds] = useLocalState(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
+  
+  useEffect(() => {
+    const { ids } = state.favorites;
+    setIds({ ids: [...ids] });
+  }, [state.favorites])
 
   return (
     <VacancyContext.Provider value={{ state, dispatch }}>

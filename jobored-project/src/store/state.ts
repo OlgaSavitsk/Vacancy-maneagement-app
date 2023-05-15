@@ -1,6 +1,6 @@
 import { VACANCY_FILTER_PARAMS } from 'constants/api.constants';
 import { Favorites, VacancyFilterParams } from 'core/models/vacancy.model';
-import { createFavoritesFromStorage } from 'utils/helpers';
+import { getInitialState } from 'utils/helpers';
 
 export interface AppState {
   params: VacancyFilterParams;
@@ -10,6 +10,6 @@ export interface AppState {
 export const InitialAppState: AppState = {
   params: VACANCY_FILTER_PARAMS,
   favorites: {
-    ids: createFavoritesFromStorage()
+    ids: getInitialState()
   },
 };
