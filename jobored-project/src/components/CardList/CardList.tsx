@@ -1,22 +1,11 @@
 import { List } from "@mantine/core";
-import { getVacancies } from "api/vacancy.service";
 import { VacancyCard } from "components/Card/VacancyCard";
-import { useParams } from "store/reducer";
+import { useParams } from "store";
 import { VacancyInfo } from "core/models/vacancy.model";
-import { useEffect, useState } from "react";
 
 
 export const VacancyCardList = () => {
-  const { state } = useParams();
-  const [data, setData] = useState<VacancyInfo[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const {objects} = await getVacancies(state.params);
-      setData(objects);
-    };
-    fetchData();
-  }, [state.params]);
+  const { state: { data } } = useParams();
 
   return (
     <List styles={() => ({

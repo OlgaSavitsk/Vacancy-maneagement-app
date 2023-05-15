@@ -1,7 +1,7 @@
 import { Card, Group, Image, Text } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { VacancyInfo } from 'core/models/vacancy.model';
-import { addFavoriteId, useParams } from 'store/reducer';
+import { addFavoriteId, useParams } from 'store';
 import { renderVacancyPayment } from '../../utils/helpers';
 
 type VacancyProps = {

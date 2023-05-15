@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { LocalStorageKey, DEFAULT_STORAGE_CONFIG } from 'constants/storage';
-import { useLocalState } from 'hooks/useLocalState';
+import { useStorage } from 'hooks/useLocalState';
 import { useEffect } from 'react';
 import { getRefreshToken } from './auth.service';
 import { baseInstance } from './api-base.service';
@@ -10,7 +10,7 @@ interface InterceptorProps {
 }
 
 export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
-  const [token, setToken] = useLocalState(
+  const [token, setToken] = useStorage(
     LocalStorageKey.authToken,
     DEFAULT_STORAGE_CONFIG,
   );

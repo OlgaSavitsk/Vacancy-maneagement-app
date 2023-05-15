@@ -1,6 +1,6 @@
 import { Button, CloseButton, rem, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { setParamsValue, useParams } from 'store/reducer';
+import { setParamsValue, useParams } from 'store';
 import { useState } from 'react';
 
 export const SearchField = () => {

@@ -22,7 +22,7 @@ export interface IndustryInfo {
 }
 
 export type VacancyFilterParams = {
-  count: number;
+  count?: number;
   published: number;
 } & FilterParams;
 
@@ -32,6 +32,8 @@ export type FilterParams = {
   catalogues?: number[];
   payment_from?: number;
   payment_to?: number;
+  no_agreement?: number;
+  ids?: number[];
 };
 
 export interface Favorites {

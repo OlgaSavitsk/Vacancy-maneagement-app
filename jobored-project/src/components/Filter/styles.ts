@@ -11,7 +11,6 @@ export const useFilterStyles = createStyles(() => ({
       fontSize: '0.875rem',
       lineHeight: '1.25rem',
       borderRadius: '0.5rem',
-      paddingTop: rem(30),
       '&:before': {
         content: '"Сбросить все"',
         paddingRight: '7px',

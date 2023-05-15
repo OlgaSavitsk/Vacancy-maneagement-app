@@ -1,15 +1,17 @@
-import { VACANCY_FILTER_PARAMS } from 'constants/api.constants';
-import { Favorites, VacancyFilterParams } from 'core/models/vacancy.model';
+import { DEFAULT_FILTER_PARAMS } from 'constants/api.constants';
+import { Favorites, VacancyFilterParams, VacancyInfo } from 'core/models/vacancy.model';
 import { getInitialState } from 'utils/helpers';
 
 export interface AppState {
-  params: VacancyFilterParams;
+  data: VacancyInfo[];
+  params: VacancyFilterParams | Favorites;
   favorites: Favorites;
 }
 
 export const InitialAppState: AppState = {
-  params: VACANCY_FILTER_PARAMS,
+  data: [],
+  params: { ...DEFAULT_FILTER_PARAMS, ids: getInitialState() },
   favorites: {
-    ids: getInitialState()
+    ids: getInitialState(),
   },
 };

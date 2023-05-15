@@ -17,11 +17,11 @@ export const DEFAULT_AUTH_REFRESH_PARAMS = {
 export const AUTH_PATH = 'oauth2/password';
 export const REFRESH_TOKEN_PATH = 'oauth2/refresh_token';
 
-export const VACANCY_FILTER_PARAMS: VacancyFilterParams = {
+export const DEFAULT_FILTER_PARAMS: VacancyFilterParams = {
   page: 0,
   count: PAGE_SIZE,
   published: 1,
-  //no_agreement: 1
+  ids: [],
 };
 
 export const VACANCY_API_PATH = 'vacancies/'

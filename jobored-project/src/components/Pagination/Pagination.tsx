@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Pagination } from '@mantine/core';
 import { START_PAGE_INDEX } from 'constants/common.constants';
-import { setParamsValue, useParams } from "store/reducer";
-import { useState } from "react";
+import { setParamsValue, useParams } from "store";
 
 export const PaginationComponent = () => {
   const { state, dispatch } = useParams();

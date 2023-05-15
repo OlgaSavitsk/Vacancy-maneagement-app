@@ -1,9 +1,8 @@
+import { getVacancies } from 'api/vacancy.service';
 import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage';
-import { FilterParams } from 'core/models/vacancy.model';
-import { useLocalState } from 'hooks/useLocalState';
+import { useStorage } from 'hooks/useLocalState';
 import { createContext, useContext, useEffect, useReducer } from 'react';
-import { ActionType, AddFavorites, AppAction, SetParams } from './actions';
-import { AppState, InitialAppState } from './state';
+import { ActionType, AppAction, AppState, InitialAppState, setData } from 'store';
 
 const appReducer = (state: AppState, action: AppAction): AppState => {
   switch (action.type) {
@@ -18,6 +17,8 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       }
       return { ...state, favorites: { ids: [...ids] } };
     }
+    case ActionType.SetData:
+      return { ...state, data: [...action.payload] };
     default:
       return state;
   }
@@ -33,28 +34,29 @@ const VacancyContext = createContext<{
   dispatch: React.Dispatch<AppAction>;
 }>(myParams);
 
-export const setParamsValue = (params: FilterParams): SetParams => ({
-  type: ActionType.SetParams,
-  payload: params,
-});
-
-export const addFavoriteId = (id: number): AddFavorites => ({
-  type: ActionType.AddFavorites,
-  payload: id,
-});
-
 interface Props {
   children: React.ReactNode;
 }
 
 export const AppProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(appReducer, InitialAppState);
-  const [idsValue, setIds] = useLocalState(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
-  
+  const [idsValue, setIds] = useStorage(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
+
   useEffect(() => {
     const { ids } = state.favorites;
     setIds({ ids: [...ids] });
-  }, [state.favorites])
+  }, [state.favorites]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (state.params.ids) {
+        const params = state.params.ids.length > 0 ? state.favorites : state.params;
+        const { objects } = await getVacancies(params);
+        dispatch(setData(objects));
+      }
+    };
+    fetchData();
+  }, [state.favorites, state.params]);
 
   return (
     <VacancyContext.Provider value={{ state, dispatch }}>

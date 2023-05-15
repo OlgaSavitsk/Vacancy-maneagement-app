@@ -1,13 +1,13 @@
+import { lazy, Suspense, useCallback, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { Global, MantineProvider } from '@mantine/core';
 import { HeaderMegaMenu } from 'components/Header/Header';
 import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
 import { headerLinks } from 'constants/header';
 import { Paths } from 'constants/paths';
-import { useLocalState } from 'hooks/useLocalState';
-import { Home } from 'pages/Home/Home';
-import { useCallback, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useStorage } from 'hooks/useLocalState';
 import { getAuthToken } from 'api/auth.service';
+
 
 function GlobalStyles() {
   return (
@@ -35,8 +35,11 @@ function GlobalStyles() {
   );
 }
 
+const Home = lazy(() => import('pages/Home/Home'))
+const FavoritesPage = lazy(() => import('pages/Favourites/Favourites'))
+
 function App() {
-  const [token, setToken] = useLocalState(
+  const [token, setToken] = useStorage(
     LocalStorageKey.authToken,
     DEFAULT_STORAGE_CONFIG,
   );
@@ -84,9 +87,12 @@ function App() {
     >
       <GlobalStyles />
       <HeaderMegaMenu links={headerLinks} />
-      <Routes>
-        <Route path={Paths.home} element={<Home />} />
-      </Routes>
+      <Suspense>
+        <Routes>
+          <Route path={Paths.home} element={<Home />} />
+          <Route path={Paths.favourites} element={<FavoritesPage />} />
+        </Routes>
+      </Suspense>
     </MantineProvider>
   );
 }

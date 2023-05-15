@@ -11,7 +11,7 @@ export function getStorageValue<T>(key: string, initialValue: T | (() => T)) {
   }
 }
 
-export function useLocalState<T>(
+export function useStorage<T>(
   key: string,
   initialValue: T | (() => T),
 ): [T, Dispatch<SetStateAction<T>>] {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Text,
   Button,
@@ -10,10 +11,10 @@ import {
 import { useForm } from '@mantine/form';
 import { IconChevronDown } from '@tabler/icons-react';
 import { getIndustryValue } from 'api/filter.service';
-import { setParamsValue, useParams } from 'store/reducer';
 import { IndustryInfo } from 'core/models/vacancy.model';
-import { useEffect, useState } from 'react';
 import { useFilterStyles } from './styles';
+import { setParamsValue, useParams } from 'store';
+import { AGREEMENT_VALUE } from 'constants/common.constants';
 
 interface IFormValue {
   catalogues: string[];
@@ -31,7 +32,11 @@ export const FilterForm = () => {
   const handleSubmit = async (values: IFormValue): Promise<void> => {
     try {
       values.catalogues &&
-        dispatch(setParamsValue({ ...values, catalogues: setIndustryValue(values) }));
+        dispatch(setParamsValue({
+          ...values,
+          catalogues: setIndustryValue(values),
+          no_agreement: AGREEMENT_VALUE,
+        }));
     } catch (error) {
       console.log(error);
     }
@@ -59,13 +64,19 @@ export const FilterForm = () => {
       withBorder
       sx={{ alignSelf: 'start', minHeight: '360px' }}
     >
-      <Group sx={{ display: 'flex' }}>
-        <Text weight={700} fz={20}>
-          Фильтры
-        </Text>
-        <CloseButton className={classes.close} aria-label="Close modal" iconSize={12} />
-      </Group>
       <form onSubmit={form.onSubmit(handleSubmit)}>
+        <Group sx={{ display: 'flex' }}>
+          <Text weight={700} fz={20}>
+            Фильтры
+          </Text>
+          <CloseButton
+            className={classes.close}
+            aria-label="Close modal"
+            iconSize={12}
+            type="reset"
+            onClick={form.reset}
+          />
+        </Group>
         <MultiSelect
           label="Отрасль"
           placeholder="Выберите отрасль"
