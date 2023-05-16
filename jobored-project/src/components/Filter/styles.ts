@@ -13,7 +13,7 @@ export const useFilterStyles = createStyles(() => ({
       borderRadius: '0.5rem',
       '&:before': {
         content: '"Сбросить все"',
-        paddingRight: '7px',
+        paddingRight: rem(7),
       },
     },
     label: {

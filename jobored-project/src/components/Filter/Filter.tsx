@@ -31,12 +31,15 @@ export const FilterForm = () => {
 
   const handleSubmit = async (values: IFormValue): Promise<void> => {
     try {
-      values.catalogues &&
-        dispatch(setParamsValue({
+      const params =
+        values.payment_from || values.payment_to ? AGREEMENT_VALUE : undefined;
+      dispatch(
+        setParamsValue({
           ...values,
           catalogues: setIndustryValue(values),
-          no_agreement: AGREEMENT_VALUE,
-        }));
+          no_agreement: params,
+        }),
+      );
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +47,7 @@ export const FilterForm = () => {
 
   const setIndustryValue = (values: IFormValue): number[] => {
     return industryData
-      .filter((value) => values.catalogues.includes(value.title))
+      .filter((value: IndustryInfo) => values.catalogues.includes(value.title))
       .map((val) => val.key);
   };
 

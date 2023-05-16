@@ -4,7 +4,7 @@ export interface VacancyData {
 }
 
 export interface VacancyInfo {
-  id: number;
+  id: number; 
   profession: string;
   town: {
     title: string;
@@ -14,6 +14,7 @@ export interface VacancyInfo {
   payment_to: number;
   payment_from: number;
   currency: string;
+  vacancyRichText: string
 }
 
 export interface IndustryInfo {

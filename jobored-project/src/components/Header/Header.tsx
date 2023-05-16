@@ -114,7 +114,7 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
       <Header height={84} px="md">
         <Container className={classes.inner}>
           <Group sx={{ height: '100%' }}>
-            <Image width={30} src="./src/assets/union.svg" alt="Logo" />
+            <Image width={30} src="../src/assets/union.svg" alt="Logo" />
             <Title className={classes.logo}>Jobored</Title>
           </Group>
 
