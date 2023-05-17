@@ -13,8 +13,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { HeaderLinkProps } from 'core/models/header.model';
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -48,6 +47,9 @@ const useStyles = createStyles((theme) => ({
       borderRadius: 0,
       padding: theme.spacing.md,
     },
+    '&.active': {
+      color: theme.colors.blue[9],
+    },
   },
 
   logo: {
@@ -74,10 +76,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  active: {
-    color: theme.colors.blue[9],
-  },
-
   hiddenMobile: {
     [theme.fn.smallerThan('sm')]: {
       display: 'none',
@@ -92,21 +90,20 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeaderMegaMenu({ links }: HeaderLinkProps) {
-  const { pathname } = useLocation()
   const [opened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const { classes, cx } = useStyles();
-  const [active, setActive] = useState(pathname);
+  const { classes } = useStyles();
 
   const menuItems = links.map((link) => (
-    <Link
+    <NavLink
       to={link.path}
       key={link.label}
-      className={cx(classes.link, { [classes.active]: active === link.path })}
+      className={classes.link}
       onClick={() => {
-        setActive(link.path);
         closeDrawer();
       }}
-    >{link.label}</Link>
+    >
+      {link.label}
+    </NavLink>
   ));
 
   return (
@@ -118,11 +115,20 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
             <Title className={classes.logo}>Jobored</Title>
           </Group>
 
-          <Group sx={{ height: '100%', flexGrow: 1 }} spacing={0} position="center" className={classes.hiddenMobile}>
+          <Group
+            sx={{ height: '100%', flexGrow: 1 }}
+            spacing={0}
+            position="center"
+            className={classes.hiddenMobile}
+          >
             {menuItems}
           </Group>
 
-          <Burger opened={opened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
+          <Burger
+            opened={opened}
+            onClick={toggleDrawer}
+            className={classes.hiddenDesktop}
+          />
           <Transition transition="pop-top-right" duration={200} mounted={opened}>
             {(styles) => (
               <Paper className={classes.dropdown} withBorder style={styles}>

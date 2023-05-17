@@ -1,5 +1,5 @@
-import { lazy, Suspense, useCallback, useEffect } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { Global, MantineProvider } from '@mantine/core';
 import { HeaderMegaMenu } from 'components/Header/Header';
 import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
@@ -10,6 +10,7 @@ import { getAuthToken } from 'api/auth.service';
 import FavoritesPage from 'pages/Favourites/Favourites-page';
 import Home from 'pages/Home/Home';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
+import { NotFound } from 'pages/NotFound/NotFound';
 
 function GlobalStyles() {
   return (
@@ -36,10 +37,6 @@ function GlobalStyles() {
     />
   );
 }
-
-// const Home = lazy(() => import('pages/Home/Home'));
-// const FavoritesPage = lazy(() => import('pages/Favourites/Favourites-page'));
-// const VacancyPage = lazy(() => import('pages/Vacancy/Vacancy-page'));
 
 function App() {
   const [token, setToken] = useStorage(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
@@ -95,12 +92,11 @@ function App() {
                 },
                 '& ul ul, ul': {
                   listStyleType: 'disc',
-                  paddingLeft: '24px',             
+                  paddingLeft: '24px',
                 },
               },
             },
           },
-
         },
       }}
       withGlobalStyles
@@ -109,11 +105,12 @@ function App() {
       <GlobalStyles />
       <HeaderMegaMenu links={headerLinks} />
 
-
       <Routes>
         <Route path={Paths.home} element={<Home />} />
         <Route path={Paths.favourites} element={<FavoritesPage />} />
         <Route path={`${Paths.vacancy}/:id`} element={<VacancyPage />} />
+        <Route path={Paths.notFound} element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </MantineProvider>
   );

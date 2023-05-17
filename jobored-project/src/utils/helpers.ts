@@ -1,5 +1,4 @@
 import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage';
-import { VacancyInfo } from 'core/models/vacancy.model';
 import { getStorageValue } from 'hooks/useLocalState';
 
 export const renderVacancyPayment = (
