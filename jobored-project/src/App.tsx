@@ -11,6 +11,7 @@ import FavoritesPage from 'pages/Favourites/Favourites-page';
 import Home from 'pages/Home/Home';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
 import { NotFound } from 'pages/NotFound/NotFound';
+import { GuardedRoute } from 'core/guards/vacancy.guard';
 
 function GlobalStyles() {
   return (
@@ -107,9 +108,16 @@ function App() {
 
       <Routes>
         <Route path={Paths.home} element={<Home />} />
-        <Route path={Paths.favourites} element={<FavoritesPage />} />
+        <Route
+          path={Paths.favourites}
+          element={
+            <GuardedRoute>
+              <FavoritesPage />
+            </GuardedRoute>
+          }
+        />
         <Route path={`${Paths.vacancy}/:id`} element={<VacancyPage />} />
-        <Route path={Paths.notFound} element={<NotFound />} />
+        <Route path={Paths.notFound} element={<NotFound isPage={true} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </MantineProvider>

@@ -3,13 +3,17 @@ import { VacancyCardList } from 'components/CardList/CardList';
 import { FilterForm } from 'components/Filter/Filter';
 import { PaginationComponent } from 'components/Pagination/Pagination';
 import { SearchField } from 'components/Search/SearchField';
+import { NotFound } from 'pages/NotFound/NotFound';
 import { useEffect } from 'react';
 import { setParamsValue, useParams } from 'store';
 import { useHomeStyles } from './styles';
 
 const Home = () => {
   const { classes } = useHomeStyles();
-  const { dispatch } = useParams();
+  const {
+    state: { data },
+    dispatch,
+  } = useParams();
 
   useEffect(() => {
     dispatch(setParamsValue({ ids: [] }));
@@ -21,8 +25,14 @@ const Home = () => {
         <FilterForm />
         <Group className={classes.inner}>
           <SearchField />
-          <VacancyCardList />
-          <PaginationComponent />
+          {data.length ? (
+            <>
+              <VacancyCardList />
+              <PaginationComponent />
+            </>
+          ) : (
+            <NotFound isPage={false} />
+          )}
         </Group>
       </Box>
     </div>

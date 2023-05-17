@@ -5,12 +5,10 @@ import { useState } from 'react';
 
 export const SearchField = () => {
   const { dispatch } = useParams();
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState<string>('');
 
   const handleSearchInputClick = async (): Promise<void> => {
-    if (searchInput) {
-      dispatch(setParamsValue({ keyword: searchInput }));
-    }
+    dispatch(setParamsValue({ keyword: searchInput }));
   };
 
   return (

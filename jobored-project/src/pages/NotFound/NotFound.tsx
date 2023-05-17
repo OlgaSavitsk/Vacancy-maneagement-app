@@ -2,6 +2,10 @@ import { Container, createStyles, Group, Text, Image, Button } from '@mantine/co
 import { Paths } from 'constants/paths';
 import { Link } from 'react-router-dom';
 
+interface NotFoundProps {
+  isPage?: boolean;
+}
+
 const useStyles = createStyles(() => ({
   container: {
     display: 'flex',
@@ -11,12 +15,12 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export const NotFound = () => {
+export const NotFound = ({ isPage }: NotFoundProps) => {
   const { classes } = useStyles();
 
   return (
     <div className={classes.container}>
-      <Container size={327} p={0} mt={120}>
+      <Container size={327} mih={557} p={0} mt={isPage ? 120 : 20}>
         <Group position="center" spacing={32}>
           <Image width={240} src={'../src/assets/notfound.png'} alt="notfound page" />
           <Text fw={700} size="1.5rem">
