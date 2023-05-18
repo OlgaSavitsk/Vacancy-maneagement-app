@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { Global, MantineProvider } from '@mantine/core';
 import { HeaderMegaMenu } from 'components/Header/Header';
 import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
@@ -7,11 +7,12 @@ import { headerLinks } from 'constants/header';
 import { Paths } from 'constants/paths';
 import { useStorage } from 'hooks/useLocalState';
 import { getAuthToken } from 'api/auth.service';
-import FavoritesPage from 'pages/Favourites/Favourites-page';
-import Home from 'pages/Home/Home';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
 import { NotFound } from 'pages/NotFound/NotFound';
 import { GuardedRoute } from 'core/guards/vacancy.guard';
+import { AppProvider, useParams } from 'store';
+import Home from 'pages/Home/Home';
+import FavoritesPage from 'pages/Favourites/Favourites-page';
 
 function GlobalStyles() {
   return (
@@ -39,8 +40,16 @@ function GlobalStyles() {
   );
 }
 
+// const Home = lazy(() => import('pages/Home/Home'));
+// const FavoritesPage = lazy(() => import('pages/Favourites/Favourites-page'));
+// const VacancyPage = lazy(() => import('pages/Vacancy/Vacancy-page'));
+
 function App() {
   const [token, setToken] = useStorage(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
+  const {
+    state: { data }
+  } = useParams();
+  const { pathname } = useLocation()
 
   const handleAuth = useCallback(async () => {
     try {
@@ -91,9 +100,9 @@ function App() {
                   padding: 0,
                   margin: 0,
                 },
-                '& ul ul, ul': {
+                '& ul': {
                   listStyleType: 'disc',
-                  paddingLeft: '24px',
+                  paddingLeft: '1.5rem',
                 },
               },
             },
@@ -105,21 +114,23 @@ function App() {
     >
       <GlobalStyles />
       <HeaderMegaMenu links={headerLinks} />
+      <AppProvider pathName={pathname}>
+        <Routes>
+          <Route path={Paths.home} element={<Home />} />
+          <Route
+            path={Paths.favourites}
+            element={
+              <GuardedRoute>
+                <FavoritesPage />
+              </GuardedRoute>
+            }
+          />
+          <Route path={`${Paths.vacancy}/:id`} element={<VacancyPage />} />
+          <Route path={Paths.notFound} element={<NotFound isPage={true} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
-      <Routes>
-        <Route path={Paths.home} element={<Home />} />
-        <Route
-          path={Paths.favourites}
-          element={
-            <GuardedRoute>
-              <FavoritesPage />
-            </GuardedRoute>
-          }
-        />
-        <Route path={`${Paths.vacancy}/:id`} element={<VacancyPage />} />
-        <Route path={Paths.notFound} element={<NotFound isPage={true} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      </ AppProvider>
     </MantineProvider>
   );
 }

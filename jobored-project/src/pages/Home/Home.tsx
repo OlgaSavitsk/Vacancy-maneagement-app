@@ -4,20 +4,14 @@ import { FilterForm } from 'components/Filter/Filter';
 import { PaginationComponent } from 'components/Pagination/Pagination';
 import { SearchField } from 'components/Search/SearchField';
 import { NotFound } from 'pages/NotFound/NotFound';
-import { useEffect } from 'react';
-import { setParamsValue, useParams } from 'store';
+import { useParams } from 'store';
 import { useHomeStyles } from './styles';
 
 const Home = () => {
   const { classes } = useHomeStyles();
   const {
-    state: { data },
-    dispatch,
+    state: { data, isFetching },
   } = useParams();
-
-  useEffect(() => {
-    dispatch(setParamsValue({ ids: [] }));
-  }, [dispatch]);
 
   return (
     <div className={classes.container}>
@@ -27,12 +21,12 @@ const Home = () => {
           <SearchField />
           {data.length ? (
             <>
-              <VacancyCardList />
+              <VacancyCardList data={data} />
               <PaginationComponent />
             </>
-          ) : (
-            <NotFound isPage={false} />
-          )}
+          ) : 
+            (!isFetching && <NotFound isPage={false} />)}
+          
         </Group>
       </Box>
     </div>

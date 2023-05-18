@@ -1,6 +1,6 @@
 import { Paths } from 'constants/paths';
 import { Navigate } from 'react-router-dom';
-import { useParams } from 'store/reducer';
+import { useParams } from 'store';
 
 interface IGuardRoute {
   children: JSX.Element;

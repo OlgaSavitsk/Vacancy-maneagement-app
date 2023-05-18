@@ -1,4 +1,5 @@
-import { Button, CloseButton, rem, TextInput } from '@mantine/core';
+import { Button, CloseButton, Group, rem, TextInput } from '@mantine/core';
+import { getHotkeyHandler } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { setParamsValue, useParams } from 'store';
 import { useState } from 'react';
@@ -12,7 +13,7 @@ export const SearchField = () => {
   };
 
   return (
-    <>
+    <Group>
       <TextInput
         placeholder="Введите название вакансии"
         rightSection={
@@ -25,6 +26,9 @@ export const SearchField = () => {
         }
         icon={<IconSearch size="1rem" stroke={1.5} />}
         onChange={(e) => setSearchInput(e.target.value)}
+        onKeyDown={getHotkeyHandler([
+          ['Enter', handleSearchInputClick],
+        ])}
         styles={() => ({
           root: {
             flexGrow: 1,
@@ -46,6 +50,6 @@ export const SearchField = () => {
           },
         })}
       />
-    </>
+    </Group>
   );
 };

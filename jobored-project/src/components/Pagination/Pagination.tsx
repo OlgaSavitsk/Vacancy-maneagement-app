@@ -23,6 +23,8 @@ export const PaginationComponent = () => {
       onChange={(e) => handlePaginate(e)}
       total={3}
       position="center"
+      mb={44}
+      sx={{alignSelf: 'flex-end'}}
     />
   );
 };
