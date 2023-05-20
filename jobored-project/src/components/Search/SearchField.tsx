@@ -1,15 +1,14 @@
 import { Button, CloseButton, Group, rem, TextInput } from '@mantine/core';
 import { getHotkeyHandler } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
-import { setParamsValue, useParams } from 'store';
-import { useState } from 'react';
+import { setParamsValue, useAppState } from 'store';
+import { FormProps } from 'core/models/form';
 
-export const SearchField = () => {
-  const { dispatch } = useParams();
-  const [searchInput, setSearchInput] = useState<string>('');
+export const SearchField = ({ form }: FormProps) => {
+  const { dispatch } = useAppState();
 
   const handleSearchInputClick = async (): Promise<void> => {
-    dispatch(setParamsValue({ keyword: searchInput }));
+    dispatch(setParamsValue({ keyword: form.values.keyword }));
   };
 
   return (
@@ -18,14 +17,13 @@ export const SearchField = () => {
         placeholder="Введите название вакансии"
         rightSection={
           <>
-            {searchInput && <CloseButton aria-label="Close modal" iconSize={20} />}
-            <Button onClick={handleSearchInputClick} type="submit" radius="md" pl="sm">
+            {form.values.keyword && <CloseButton aria-label="Close modal" iconSize={20} />}
+            <Button onClick={handleSearchInputClick} type="submit" radius="md" lts={1}>
               Поиск
             </Button>
           </>
         }
-        icon={<IconSearch size="1rem" stroke={1.5} />}
-        onChange={(e) => setSearchInput(e.target.value)}
+        icon={<IconSearch size="1rem" stroke={1.5}/>}
         onKeyDown={getHotkeyHandler([
           ['Enter', handleSearchInputClick],
         ])}
@@ -33,9 +31,11 @@ export const SearchField = () => {
           root: {
             flexGrow: 1,
           },
+          icon: {
+            width: '2.8rem',
+          },
           rightSection: {
             justifyContent: 'end',
-            width: rem(83),
             paddingRight: '0.75rem',
             columnGap: '0.5rem',
             '& button': {
@@ -47,8 +47,10 @@ export const SearchField = () => {
           },
           input: {
             height: '3rem',
+            letterSpacing: rem(0.4),
           },
         })}
+        {...form.getInputProps('keyword')}
       />
     </Group>
   );

@@ -1,5 +1,4 @@
 import { getVacancies } from 'api/vacancy.service';
-import { Paths } from 'constants/paths';
 import { LocalStorageKey, DEFAULT_FAVORITES } from 'constants/storage';
 import { useStorage } from 'hooks/useLocalState';
 import { useReducer, useEffect } from 'react';
@@ -7,10 +6,9 @@ import { ActionType, appReducer, InitialAppState, setData, VacancyContext } from
 
 interface Props {
   children: React.ReactNode;
-  pathName: string;
 }
 
-export const AppProvider = ({ children, pathName }: Props) => {
+export const AppProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(appReducer, InitialAppState);
   const [idsValue, setIds] = useStorage(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
 
@@ -20,17 +18,12 @@ export const AppProvider = ({ children, pathName }: Props) => {
   }, [state.favorites]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchVacancies() {
       try {
         dispatch({ type: ActionType.Fetching, payload: true });
-        const params =
-          pathName === Paths.home
-            ? { ids: [] }
-            : pathName === Paths.favourites
-            ? { ids: state.favorites.ids }
-            : state.params.ids;
-
-        const { objects } = await getVacancies({ ...state.params, ...params });
+        const { objects } = await getVacancies({
+          ...state.params,
+        });
         dispatch(setData(objects));
       } catch (e) {
         console.log(e);
@@ -38,8 +31,8 @@ export const AppProvider = ({ children, pathName }: Props) => {
         dispatch({ type: ActionType.Fetching, payload: false });
       }
     }
-    fetchData();
-  }, [pathName, state.favorites.ids, state.params]);
+    fetchVacancies();
+  }, [state.params]);
 
   return (
     <VacancyContext.Provider value={{ state, dispatch }}>

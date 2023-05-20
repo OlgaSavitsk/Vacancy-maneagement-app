@@ -1,12 +1,6 @@
 import { createStyles, rem } from '@mantine/core';
 
 export const useVacancyStyles = createStyles(() => ({
-  container: {
-    display: 'flex',
-    flex: '1 1 auto',
-    width: '100%',
-    background: '#F7F7F8',
-  },
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -15,13 +9,15 @@ export const useVacancyStyles = createStyles(() => ({
     width: '100%',
     minHeight: '360px',
     margin: '0 auto',
+    marginBottom: '3rem',
     padding: '0 1rem',
   },
   inner: {
+    position: 'relative',
     flexDirection: 'column',
     alignItems: 'start',
     flexGrow: 1,
-    rowGap: rem(12),
+    rowGap: rem(20),
     '& > div, ul': {
       width: '100%',
     },

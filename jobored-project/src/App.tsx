@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Global, MantineProvider } from '@mantine/core';
 import { HeaderMegaMenu } from 'components/Header/Header';
 import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
@@ -10,16 +10,19 @@ import { getAuthToken } from 'api/auth.service';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
 import { NotFound } from 'pages/NotFound/NotFound';
 import { GuardedRoute } from 'core/guards/vacancy.guard';
-import { AppProvider, useParams } from 'store';
+import { AppProvider } from 'store';
 import Home from 'pages/Home/Home';
 import FavoritesPage from 'pages/Favourites/Favourites-page';
 
 function GlobalStyles() {
   return (
     <Global
-      styles={() => ({
+      styles={(theme) => ({
         '*, *::before, *::after': {
           boxSizing: 'border-box',
+        },
+        body: {
+          transition: 'all 1s ease-out',
         },
         '#root': {
           display: 'flex',
@@ -29,6 +32,12 @@ function GlobalStyles() {
           '& input': {
             borderRadius: '0.5rem',
           },
+        },
+        '.container': {
+          display: 'flex',
+          flex: '1 1 auto',
+          width: '100%',
+          background: theme.colors.grey[2],
         },
         ul: {
           display: 'flex',
@@ -40,20 +49,12 @@ function GlobalStyles() {
   );
 }
 
-// const Home = lazy(() => import('pages/Home/Home'));
-// const FavoritesPage = lazy(() => import('pages/Favourites/Favourites-page'));
-// const VacancyPage = lazy(() => import('pages/Vacancy/Vacancy-page'));
-
 function App() {
   const [token, setToken] = useStorage(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
-  const {
-    state: { data }
-  } = useParams();
-  const { pathname } = useLocation()
 
   const handleAuth = useCallback(async () => {
     try {
-      if (token) return;
+      if (token.access_token) return;
       const { access_token, refresh_token } = await getAuthToken();
       setToken({ access_token, refresh_token });
     } catch (e) {
@@ -69,6 +70,11 @@ function App() {
     <MantineProvider
       theme={{
         fontFamily: 'Inter, sans-serif',
+        colors: {
+          hover: ['#92C1FF', '#5E96FC'],
+          active: ['#5E96FC'],
+          grey: ['#ACADB9', '#7B7C88', '#F7F7F8'],
+        },
         headings: {
           sizes: {
             h4: {
@@ -87,7 +93,17 @@ function App() {
               },
             },
           },
-
+          Button: {
+            styles: (theme) => ({
+              root: {
+                transition: 'all 0.2s ease-out',
+                ...theme.fn.hover({ backgroundColor: theme.colors.hover[0] }),
+                '&:active': {
+                  backgroundColor: theme.colors.active,
+                },
+              },
+            }),
+          },
           TypographyStylesProvider: {
             styles: {
               root: {
@@ -113,8 +129,9 @@ function App() {
       withNormalizeCSS
     >
       <GlobalStyles />
-      <HeaderMegaMenu links={headerLinks} />
-      <AppProvider pathName={pathname}>
+
+      <AppProvider>
+        <HeaderMegaMenu links={headerLinks} />
         <Routes>
           <Route path={Paths.home} element={<Home />} />
           <Route
@@ -129,8 +146,7 @@ function App() {
           <Route path={Paths.notFound} element={<NotFound isPage={true} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-
-      </ AppProvider>
+      </AppProvider>
     </MantineProvider>
   );
 }

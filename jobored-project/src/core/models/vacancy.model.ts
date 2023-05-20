@@ -31,8 +31,8 @@ export type FilterParams = {
   page?: number;
   keyword?: string;
   catalogues?: number[];
-  payment_from?: number;
-  payment_to?: number;
+  payment_from?: number | string;
+  payment_to?: number | string;
   no_agreement?: number;
   ids?: number[];
 };

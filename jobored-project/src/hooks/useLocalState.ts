@@ -22,6 +22,7 @@ export function useStorage<T>(
   const setValue = (value: SetStateAction<T | ((prevState: T) => T)>) => {
     try {
       const setedValue = value instanceof Function ? value(state) : value;
+      console.log(setedValue);
       setState(setedValue);
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(setedValue));

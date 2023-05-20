@@ -1,33 +1,16 @@
-import { useEffect, useState } from 'react';
-import {
-  Text,
-  Button,
-  Group,
-  CloseButton,
-  NumberInput,
-  Paper,
-  MultiSelect,
-} from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { IconChevronDown } from '@tabler/icons-react';
-import { getIndustryValue } from 'api/filter.service';
-import { IndustryInfo } from 'core/models/vacancy.model';
+import { useCallback, useState } from 'react';
+import { Button, Group, CloseButton, Paper, Title } from '@mantine/core';
 import { useFilterStyles } from './styles';
-import { setParamsValue, useParams } from 'store';
+import { setParamsValue, useAppState } from 'store';
 import { AGREEMENT_VALUE } from 'constants/common.constants';
+import { SelectComponent } from './Select';
+import { SalaryInput } from './SalaryInput';
+import { FormProps, IFormValue } from 'core/models/form';
 
-interface IFormValue {
-  catalogues: string[];
-  payment_from: number;
-  payment_to: number;
-}
-
-export const FilterForm = () => {
-  const { dispatch } = useParams();
-  const [industryData, setIndustryData] = useState<IndustryInfo[]>([]);
+export const FilterForm = ({ form }: FormProps) => {
+  const { dispatch } = useAppState();
+  const [industryData, setIndustryData] = useState<number[] | undefined>([]);
   const { classes } = useFilterStyles();
-
-  const form = useForm<IFormValue>();
 
   const handleSubmit = async (values: IFormValue): Promise<void> => {
     try {
@@ -36,7 +19,7 @@ export const FilterForm = () => {
       dispatch(
         setParamsValue({
           ...values,
-          catalogues: setIndustryValue(values),
+          catalogues: industryData,
           no_agreement: params,
         }),
       );
@@ -45,18 +28,19 @@ export const FilterForm = () => {
     }
   };
 
-  const setIndustryValue = (values: IFormValue): number[] => {
-    return industryData
-      .filter((value: IndustryInfo) => values.catalogues.includes(value.title))
-      .map((val) => val.key);
-  };
-
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await getIndustryValue();
-      setIndustryData(data);
-    };
-    fetch();
+  const resetForm = useCallback(() => {
+    try {
+      form.reset();
+      dispatch(
+        setParamsValue({
+          ...form.values,
+          catalogues: [],
+          no_agreement: undefined,
+        }),
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (
@@ -68,49 +52,24 @@ export const FilterForm = () => {
       sx={{ alignSelf: 'start', minHeight: '360px' }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Group sx={{ display: 'flex' }}>
-          <Text weight={700} fz={20}>
+        <Group sx={{ display: 'flex', alignItems: 'start' }}>
+          <Title weight={700} fz={20} lh={1}>
             Фильтры
-          </Text>
+          </Title>
           <CloseButton
             className={classes.close}
             aria-label="Close modal"
             iconSize={12}
             type="reset"
-            onClick={form.reset}
+            onClick={resetForm}
           />
         </Group>
-        <MultiSelect
-          label="Отрасль"
-          placeholder="Выберите отрасль"
-          data={industryData.map((industry) => industry.title)}
-          classNames={{ label: classes.label }}
-          rightSection={<IconChevronDown size="1rem" />}
-          dropdownPosition="bottom"
-          disableSelectedItemFiltering
-          maxSelectedValues={1}
-          {...form.getInputProps('catalogues')}
-        />
-        <Group sx={{ width: '100%' }} pt="lg">
-          <NumberInput
-            label="Оклад"
-            placeholder="От"
-            stepHoldDelay={500}
-            stepHoldInterval={100}
-            classNames={{ label: classes.label, root: classes.field }}
-            {...form.getInputProps('payment_from')}
-          />
 
-          <NumberInput
-            placeholder="До"
-            stepHoldDelay={500}
-            stepHoldInterval={100}
-            classNames={{ root: classes.field }}
-            {...form.getInputProps('payment_to')}
-          />
-        </Group>
+        <SelectComponent form={form} setSelectedValue={(data) => setIndustryData(data)} />
+        <SalaryInput form={form} />
+
         <Group position="center" mt="lg">
-          <Button type="submit" fullWidth radius="md">
+          <Button type="submit" fullWidth radius="md" h="2.5rem">
             Применить
           </Button>
         </Group>

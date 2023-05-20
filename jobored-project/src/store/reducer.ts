@@ -6,15 +6,15 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, params: { ...state.params, ...action.payload } };
     case ActionType.AddFavorites: {
       let { ids } = state.favorites;
-      if (state.favorites.ids.includes(action.payload)) {
+      if (state.favorites.ids.includes(action.payload as number)) {
         ids = ids.filter((fav) => fav !== action.payload);
       } else {
-        ids = [...state.favorites.ids, action.payload];
+        ids = [...state.favorites.ids, action.payload as number];
       }
       return { ...state, favorites: { ids: [...ids] } };
     }
     case ActionType.SetData:
-      return { ...state, data: [...action.payload]};
+      return { ...state, data: [...action.payload] };
     case ActionType.Fetching:
       return { ...state, isFetching: action.payload };
     default:

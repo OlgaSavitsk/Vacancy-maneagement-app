@@ -7,7 +7,13 @@ interface Props extends PropsWithChildren {
 
 export const LoaderContainer: FC<Props> = ({ isLoading, children }): JSX.Element => {
   if (isLoading) {
-    return <LoadingOverlay visible={isLoading} overlayBlur={2} />;
+    return (
+      <LoadingOverlay
+        visible={isLoading}
+        overlayBlur={2}
+        loaderProps={{ size: 'lg', variant: 'dots' }}
+      />
+    );
   }
 
   return children as ReactElement;

@@ -1,4 +1,4 @@
-import { Container, createStyles, Group, Text, Image, Button } from '@mantine/core';
+import { Container, Group, Text, Image, Button } from '@mantine/core';
 import { Paths } from 'constants/paths';
 import { Link } from 'react-router-dom';
 
@@ -6,27 +6,26 @@ interface NotFoundProps {
   isPage?: boolean;
 }
 
-const useStyles = createStyles(() => ({
-  container: {
-    display: 'flex',
-    flex: '1 1 auto',
-    width: '100%',
-    background: '#F7F7F8',
-  },
-}));
-
 export const NotFound = ({ isPage }: NotFoundProps) => {
-  const { classes } = useStyles();
-
   return (
-    <div className={classes.container}>
+    <div className="container">
       <Container size={327} mih={557} p={0} mt={isPage ? 120 : 20}>
-        <Group position="center" spacing={32}>
+        <Group position="center" spacing={29} lts={0.3}>
           <Image width={240} src={'../src/assets/notfound.png'} alt="notfound page" />
           <Text fw={700} size="1.5rem">
             Упс, здесь еще ничего нет!
           </Text>
-          <Button component={Link} to={Paths.home} variant="light">
+          <Button
+            component={Link}
+            to={Paths.home}
+            variant="light"
+            styles={() => ({
+              root: {
+                height: '2.6rem',
+                padding: '0 1.5rem',
+              },
+            })}
+          >
             Поиск Вакансий
           </Button>
         </Group>

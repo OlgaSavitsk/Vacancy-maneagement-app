@@ -14,7 +14,7 @@ export interface SetParams {
 
 export interface AddFavorites {
   type: ActionType.AddFavorites;
-  payload: number;
+  payload: number | number[];
 }
 
 export interface SetData {
@@ -32,7 +32,7 @@ export const setParamsValue = (params: FilterParams | Favorites): SetParams => (
   payload: params,
 });
 
-export const addFavoriteId = (id: number): AddFavorites => ({
+export const addFavoriteId = (id: number | number[]): AddFavorites => ({
   type: ActionType.AddFavorites,
   payload: id,
 });

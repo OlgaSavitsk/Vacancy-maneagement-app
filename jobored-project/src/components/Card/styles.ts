@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core';
 
-export const useCardVacancyStyles = createStyles(() => ({
+export const useCardVacancyStyles = createStyles((theme) => ({
   card: {
     '&:hover': {
       transform: 'translateY(-1px)',
@@ -12,11 +12,12 @@ export const useCardVacancyStyles = createStyles(() => ({
     flexWrap: 'nowrap',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+    rowGap: '0.6rem',
 
     '& > a': {
       width: '100%',
       textDecoration: 'none',
-      color: '#232134',
+      color: theme.black,
     },
   },
 }));

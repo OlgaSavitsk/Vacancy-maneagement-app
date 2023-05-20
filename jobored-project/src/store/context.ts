@@ -11,4 +11,4 @@ export const VacancyContext = createContext<{
   dispatch: React.Dispatch<AppAction>;
 }>(myParams);
 
-export const useParams = () => useContext(VacancyContext);
+export const useAppState = () => useContext(VacancyContext);

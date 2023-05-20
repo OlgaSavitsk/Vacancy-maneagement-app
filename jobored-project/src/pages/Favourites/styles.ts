@@ -1,12 +1,6 @@
 import { createStyles, rem } from "@mantine/core";
 
 export const useFavouritesStyles = createStyles(() => ({
-    container: {
-      display: 'flex',
-      flex: '1 1 auto',
-      width: '100%',
-      background: '#F7F7F8',
-    },
     wrapper: {
       display: 'flex',
       flexDirection: 'row',

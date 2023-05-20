@@ -1,6 +1,6 @@
 import { Paths } from 'constants/paths';
 import { Navigate } from 'react-router-dom';
-import { useParams } from 'store';
+import { useAppState } from 'store';
 
 interface IGuardRoute {
   children: JSX.Element;
@@ -9,7 +9,7 @@ interface IGuardRoute {
 export const GuardedRoute = ({ children }: IGuardRoute): JSX.Element => {
   const {
     state: { favorites },
-  } = useParams();
+  } = useAppState();
   
   return favorites.ids.length ? children : <Navigate to={Paths.notFound} />;
 };
