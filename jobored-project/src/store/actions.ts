@@ -1,4 +1,4 @@
-import { Favorites, FilterParams, VacancyInfo } from 'core/models/vacancy.model';
+import { Favorites, FilterParams, VacancyData, VacancyInfo } from 'core/models/vacancy.model';
 
 export enum ActionType {
   SetData,
@@ -19,7 +19,7 @@ export interface AddFavorites {
 
 export interface SetData {
   type: ActionType.SetData;
-  payload: VacancyInfo[];
+  payload: VacancyData;
 }
 
 export interface Fetching {
@@ -37,7 +37,7 @@ export const addFavoriteId = (id: number | number[]): AddFavorites => ({
   payload: id,
 });
 
-export const setData = (data: VacancyInfo[]): SetData => ({
+export const setData = (data: VacancyData): SetData => ({
   type: ActionType.SetData,
   payload: data,
 });

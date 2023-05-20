@@ -1,3 +1,4 @@
+import { INIT_PAGE_QUANTITY, MAX_TOTAL, RECORDS_PER_PAGE } from 'constants/pagination';
 import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage';
 import { getStorageValue } from 'hooks/useLocalState';
 
@@ -18,4 +19,18 @@ export const renderVacancyPayment = (
 export const getInitialState = (): number[] => {
   const { ids } = getStorageValue(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
   return ids;
+};
+
+export const renderPaginationPage = (totalVacancy: number, activePage: number) => {
+  let total = INIT_PAGE_QUANTITY;
+  if (activePage === INIT_PAGE_QUANTITY && totalVacancy > MAX_TOTAL) {
+    total = (MAX_TOTAL / RECORDS_PER_PAGE);
+  }
+  if (activePage > INIT_PAGE_QUANTITY && totalVacancy > MAX_TOTAL) {
+    total = MAX_TOTAL / RECORDS_PER_PAGE;
+  }
+  if (totalVacancy < INIT_PAGE_QUANTITY * RECORDS_PER_PAGE) {
+    total = Math.ceil(totalVacancy / RECORDS_PER_PAGE);
+  } 
+  return total;
 };

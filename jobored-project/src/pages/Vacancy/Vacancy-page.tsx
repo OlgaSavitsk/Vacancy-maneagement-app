@@ -16,7 +16,7 @@ export const VacancyPage = () => {
   const { id } = useParams();
 
   const vacancy = useMemo(() => {
-    return state.data.find((vacancy) => vacancy.id === Number(id));
+    return state.data?.objects.find((vacancy) => vacancy.id === Number(id));
   }, [id, state.data]);
 
   const renderVacancyDescript = (vacancyData: VacancyInfo) => {

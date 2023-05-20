@@ -14,7 +14,7 @@ const FavoritesPage = () => {
   } = useAppState();
 
   const vacanciesData = useMemo(() => {
-    return data.filter((vacancy) => favorites.ids.includes(vacancy.id));
+    return data?.objects.filter((vacancy) => favorites.ids.includes(vacancy.id));
   }, [data, favorites.ids]);
 
   useEffect(() => {

@@ -21,10 +21,10 @@ export const AppProvider = ({ children }: Props) => {
     async function fetchVacancies() {
       try {
         dispatch({ type: ActionType.Fetching, payload: true });
-        const { objects } = await getVacancies({
+        const data = await getVacancies({
           ...state.params,
         });
-        dispatch(setData(objects));
+        dispatch(setData(data));
       } catch (e) {
         console.log(e);
       } finally {

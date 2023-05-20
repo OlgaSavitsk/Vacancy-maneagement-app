@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pagination } from '@mantine/core';
 import { START_PAGE_INDEX } from 'constants/common.constants';
 import { setParamsValue, useAppState } from 'store';
+import { renderPaginationPage } from 'utils/helpers';
 
 export const PaginationComponent = () => {
   const { state, dispatch } = useAppState();
   const [activePage, setPage] = useState(1);
+  const [total, setTotal] = useState<number>(3);
 
   const handlePaginate = (page: number) => {
     setPage(page);
@@ -17,14 +19,29 @@ export const PaginationComponent = () => {
     );
   };
 
+  useEffect(() => {
+    function setPage() {
+      if (state.data) {
+        const total = renderPaginationPage(state.data.total, activePage);
+        console.log(total);
+        setTotal(total);
+      }
+    }
+    setPage();
+  }, [activePage, state.data]);
+
   return (
-    <Pagination
-      value={activePage}
-      onChange={(e) => handlePaginate(e)}
-      total={3}
-      position="center"
-      mb={24}
-      sx={{ alignSelf: 'flex-end' }}
-    />
+    <>
+      {state.data && (
+        <Pagination
+          value={activePage}
+          onChange={(e) => handlePaginate(e)}
+          total={total}
+          position="center"
+          mb={24}
+          sx={{ alignSelf: 'flex-end' }}
+        />
+      )}
+    </>
   );
 };

@@ -5,7 +5,7 @@ import { VacancyInfo } from 'core/models/vacancy.model';
 import { LoaderContainer } from 'core/LoaderContainer/LoaderContainer';
 
 interface Props {
-  data: VacancyInfo[];
+  data: VacancyInfo[] | undefined;
 }
 
 export const VacancyCardList = ({ data }: Props) => {
@@ -27,7 +27,7 @@ export const VacancyCardList = ({ data }: Props) => {
           },
         })}
       >
-        {data.map((vacancy: VacancyInfo) => {
+        {data && data.map((vacancy: VacancyInfo) => {
           return (
             <List.Item key={vacancy.id}>
               <VacancyCard vacancy={vacancy} isDetails={false} />

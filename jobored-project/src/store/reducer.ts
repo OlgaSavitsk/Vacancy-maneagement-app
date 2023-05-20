@@ -14,7 +14,7 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
       return { ...state, favorites: { ids: [...ids] } };
     }
     case ActionType.SetData:
-      return { ...state, data: [...action.payload] };
+      return { ...state, data: action.payload };
     case ActionType.Fetching:
       return { ...state, isFetching: action.payload };
     default:

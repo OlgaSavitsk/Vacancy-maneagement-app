@@ -26,7 +26,6 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log('home')
     dispatch(setParamsValue({ids: []}))
   }, [])
 
@@ -36,9 +35,9 @@ const Home = () => {
         <FilterForm form={form} />
         <Group className={classes.inner}>
           <SearchField form={form}/>
-          {data.length ? (
+          {data?.objects.length ? (
             <>
-              <VacancyCardList data={data} />
+              <VacancyCardList data={data.objects} />
               <PaginationComponent />
             </>
           ) : 
