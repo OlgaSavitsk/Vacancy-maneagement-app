@@ -10,7 +10,7 @@ interface Props {
 
 export const AppProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(appReducer, InitialAppState);
-  const [idsValue, setIds] = useStorage(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
+  const [, setIds] = useStorage(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
 
   useEffect(() => {
     const { ids } = state.favorites;

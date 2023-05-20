@@ -1,4 +1,4 @@
-import { Favorites, FilterParams, VacancyData, VacancyInfo } from 'core/models/vacancy.model';
+import { Favorites, FilterParams, VacancyData } from 'core/models/vacancy.model';
 
 export enum ActionType {
   SetData,

@@ -23,7 +23,6 @@ export const PaginationComponent = () => {
     function setPage() {
       if (state.data) {
         const total = renderPaginationPage(state.data.total, activePage);
-        console.log(total);
         setTotal(total);
       }
     }

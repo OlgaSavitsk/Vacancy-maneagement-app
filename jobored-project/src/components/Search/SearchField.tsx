@@ -11,19 +11,23 @@ export const SearchField = ({ form }: FormProps) => {
     dispatch(setParamsValue({ keyword: form.values.keyword }));
   };
 
+  const resetSearchInput = () => {
+    form.setValues({ keyword: '' })
+  };
+
   return (
     <Group>
       <TextInput
         placeholder="Введите название вакансии"
         rightSection={
           <>
-            {form.values.keyword && <CloseButton aria-label="Close modal" iconSize={20} />}
+            {form.values.keyword && <CloseButton aria-label="Close modal" iconSize={20} onClick={resetSearchInput} />}
             <Button onClick={handleSearchInputClick} type="submit" radius="md" lts={1}>
               Поиск
             </Button>
           </>
         }
-        icon={<IconSearch size="1rem" stroke={1.5}/>}
+        icon={<IconSearch size="1rem" stroke={1.5} />}
         onKeyDown={getHotkeyHandler([
           ['Enter', handleSearchInputClick],
         ])}

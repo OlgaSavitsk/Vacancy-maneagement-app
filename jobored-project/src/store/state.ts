@@ -1,5 +1,5 @@
 import { DEFAULT_FILTER_PARAMS } from 'constants/api.constants';
-import { Favorites, VacancyData, VacancyFilterParams, VacancyInfo } from 'core/models/vacancy.model';
+import { Favorites, VacancyData, VacancyFilterParams } from 'core/models/vacancy.model';
 import { getInitialState } from 'utils/helpers';
 
 export interface AppState {

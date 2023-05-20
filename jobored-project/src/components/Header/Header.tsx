@@ -10,8 +10,9 @@ import {
   Paper,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { Paths } from 'constants/paths';
 import { HeaderLinkProps } from 'core/models/header.model';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useHeaderStyles } from './styles';
 
 export function HeaderMegaMenu({ links }: HeaderLinkProps) {
@@ -35,10 +36,12 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
     <Box>
       <Header height={84} px="md">
         <Container className={classes.inner}>
-          <Group sx={{ height: '100%' }}>
-            <Image width={30} src="../src/assets/union.svg" alt="Logo" />
-            <Title className={classes.logo}>Jobored</Title>
-          </Group>
+          <Link to={`${Paths.home}`}>
+            <Group sx={{ height: '100%' }}>
+              <Image width={30} src="../src/assets/union.svg" alt="Logo" />
+              <Title className={classes.logo}>Jobored</Title>
+            </Group>
+          </Link>
 
           <Group
             sx={{}}

@@ -44,6 +44,10 @@ function GlobalStyles() {
           flexDirection: 'column',
           listStyleType: 'none',
         },
+        a: {
+          textDecoration: 'none',
+          color: theme.black
+        }
       })}
     />
   );
@@ -81,7 +85,6 @@ function App() {
               fontWeight: 400,
               fontSize: '1rem',
               lineHeight: 1.25,
-              fontFamily: 'Inter, sans-serif',
             },
           },
         },
