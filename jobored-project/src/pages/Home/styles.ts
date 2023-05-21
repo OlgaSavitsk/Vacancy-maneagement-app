@@ -1,6 +1,6 @@
 import { createStyles, rem } from '@mantine/core';
 
-export const useHomeStyles = createStyles(() => ({
+export const useHomeStyles = createStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -10,6 +10,11 @@ export const useHomeStyles = createStyles(() => ({
     minHeight: '360px',
     margin: '0 auto',
     padding: '0 1.2rem',
+
+    [theme.fn.smallerThan('sm')]: {
+      flexDirection: 'column',
+      gap: '1rem'
+    },
   },
   inner: {
     minHeight: '100%',

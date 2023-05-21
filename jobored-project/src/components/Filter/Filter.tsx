@@ -49,7 +49,9 @@ export const FilterForm = ({ form }: FormProps) => {
       p="lg"
       radius="md"
       withBorder
-      sx={{ alignSelf: 'start', minHeight: '360px' }}
+      sx={{ alignSelf: 'start', minHeight: '360px', '@media (max-width: 755px)': {
+       maxWidth: '100%', width: '100%'
+      }, }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Group sx={{ display: 'flex', alignItems: 'start' }}>
