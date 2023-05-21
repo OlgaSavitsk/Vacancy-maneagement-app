@@ -11,7 +11,7 @@ export const NotFound = ({ isPage }: NotFoundProps) => {
     <div className="container">
       <Container size={327} mih={557} p={0} mt={isPage ? 120 : 20}>
         <Group position="center" spacing={29} lts={0.3}>
-          <Image width={240} src={'../src/assets/notfound.png'} alt="notfound page" />
+          <Image width={240} src={'../notfound.svg'} alt="notfound page" />
           <Text fw={700} size="1.5rem">
             Упс, здесь еще ничего нет!
           </Text>

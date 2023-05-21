@@ -23,7 +23,7 @@ const FavoritesPage = () => {
       dispatch(setParamsValue({ ids: ids }));
     }
     fetch();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="container">

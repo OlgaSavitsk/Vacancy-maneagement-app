@@ -1,5 +1,5 @@
 import { VacancyFilterParams } from "core/models/vacancy.model";
-import { PAGE_SIZE } from "./common.constants";
+import { RECORDS_PER_PAGE } from "./pagination";
 
 export const DEFAULT_AUTH_PARAMS = {
   login: import.meta.env.VITE_API_LOGIN,
@@ -19,7 +19,7 @@ export const REFRESH_TOKEN_PATH = 'oauth2/refresh_token';
 
 export const DEFAULT_FILTER_PARAMS: VacancyFilterParams = {
   page: 0,
-  count: PAGE_SIZE,
+  count: RECORDS_PER_PAGE,
   published: 1,
   ids: [],
 };

@@ -25,9 +25,13 @@ const Home = () => {
     },
   });
 
-  useEffect(() => {
-    dispatch(setParamsValue({ids: []}))
-  }, [])
+  useEffect(() => {  
+    function fetch() {
+      dispatch(setParamsValue({ ids: [] }));
+    }
+    fetch();  
+   fetch()
+  }, [dispatch])
 
   return (
     <div className='container'>

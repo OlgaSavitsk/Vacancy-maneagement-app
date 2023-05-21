@@ -38,7 +38,7 @@ export function HeaderMegaMenu({ links }: HeaderLinkProps) {
         <Container className={classes.inner}>
           <Link to={`${Paths.home}`}>
             <Group sx={{ height: '100%' }}>
-              <Image width={30} src="../src/assets/union.svg" alt="Logo" />
+              <Image width={30} src="../union.svg" alt="Logo" />
               <Title className={classes.logo}>Jobored</Title>
             </Group>
           </Link>

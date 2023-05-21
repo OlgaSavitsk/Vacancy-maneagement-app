@@ -18,7 +18,7 @@ export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
   const createHeaderConfig = (config: InternalAxiosRequestConfig) => {
     config.headers['x-secret-key'] = import.meta.env.VITE_SECRET_KEY;
     config.headers['X-Api-App-Id'] = import.meta.env.VITE_API_CLIENT_SECRET;
-    if (token) {
+    if (token.access_token) {
       config.headers['Authorization'] = `Bearer ${token.access_token}`;
     }
   };

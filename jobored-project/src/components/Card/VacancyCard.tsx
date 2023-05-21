@@ -88,7 +88,7 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
 
         <Image
           width={22}
-          src={isFavorite ? '../src/assets/starfill.svg' : '../src/assets/star.svg'}
+          src={isFavorite ? './starfill.svg' : './star.svg'}
           alt="favourite"
           onClick={() => handleFavorite(id)}
           styles={() => ({
