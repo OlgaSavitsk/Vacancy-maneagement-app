@@ -1,8 +1,7 @@
 import { Group, List } from '@mantine/core';
-import { VacancyCard } from 'components/Card/VacancyCard';
+import { VacancyCard } from 'components';
 import { useAppState } from 'store';
-import { VacancyInfo } from 'core/models/vacancy.model';
-import { LoaderContainer } from 'core/LoaderContainer/LoaderContainer';
+import { VacancyInfo, LoaderContainer } from 'core';
 
 interface Props {
   data: VacancyInfo[] | undefined;
@@ -14,13 +13,14 @@ export const VacancyCardList = ({ data }: Props) => {
   } = useAppState();
 
   return (
-    <Group mih={300} sx={{ alignItems: 'start', flex: '1 1 auto', position: 'relative' }}>
+    <Group sx={{ alignItems: 'start', flex: '1 1 auto', position: 'relative' }}>
       <LoaderContainer isLoading={isFetching} />
       <List
         styles={() => ({
           root: {
             rowGap: '1rem',
             marginBottom: '2.5rem',
+            display: data?.length ? 'flex' : 'none'
           },
           itemWrapper: {
             width: '100%',

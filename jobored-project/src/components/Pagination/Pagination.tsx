@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pagination } from '@mantine/core';
 import { START_PAGE_INDEX } from 'constants/common.constants';
 import { setParamsValue, useAppState } from 'store';
-import { renderPaginationPage } from 'utils/helpers';
+import { renderPaginationPage } from 'utils';
 
 export const PaginationComponent = () => {
   const { state, dispatch } = useAppState();

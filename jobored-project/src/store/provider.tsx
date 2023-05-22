@@ -1,7 +1,7 @@
-import { getVacancies } from 'api/vacancy.service';
+import { getVacancies } from 'core/api/vacancy.service';
 import { LocalStorageKey, DEFAULT_FAVORITES } from 'constants/storage';
 import { useStorage } from 'hooks/useLocalState';
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useCallback } from 'react';
 import { ActionType, appReducer, InitialAppState, setData, VacancyContext } from 'store';
 
 interface Props {
@@ -17,22 +17,24 @@ export const AppProvider = ({ children }: Props) => {
     setIds({ ids: [...ids] });
   }, [state.favorites]);
 
-  useEffect(() => {
-    async function fetchVacancies() {
-      try {
-        dispatch({ type: ActionType.Fetching, payload: true });
-        const data = await getVacancies({
-          ...state.params,
-        });
-        dispatch(setData(data));
-      } catch (e) {
-        console.log(e);
-      } finally {
-        dispatch({ type: ActionType.Fetching, payload: false });
-      }
+  const fetchVacancies = useCallback(async () => {
+    try {
+      dispatch({ type: ActionType.Fetching, payload: true });
+      const data = await getVacancies({
+        ...state.params,
+      });
+      console.log(data)
+      dispatch(setData(data));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch({ type: ActionType.Fetching, payload: false });
     }
+  }, [state.params])
+
+  useEffect(() => {
     fetchVacancies();
-  }, [state.params]);
+  }, [fetchVacancies]);
 
   return (
     <VacancyContext.Provider value={{ state, dispatch }}>

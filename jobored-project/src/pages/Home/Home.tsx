@@ -1,10 +1,13 @@
 import { Box, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { VacancyCardList } from 'components/CardList/CardList';
-import { FilterForm } from 'components/Filter/Filter';
-import { PaginationComponent } from 'components/Pagination/Pagination';
-import { SearchField } from 'components/Search/SearchField';
-import { IFormValue } from 'core/models/form';
+import {
+  VacancyCardList,
+  FilterForm,
+  PaginationComponent,
+  SearchField,
+} from 'components';
+import { initFilterValue } from 'constants/form';
+import { IFormValue } from 'core';
 import { NotFound } from 'pages/NotFound/NotFound';
 import { useEffect } from 'react';
 import { setParamsValue, useAppState } from 'store';
@@ -13,40 +16,30 @@ import { useHomeStyles } from './styles';
 const Home = () => {
   const { classes } = useHomeStyles();
   const {
-    state: { data, isFetching }, dispatch
+    state: { data, isFetching },
+    dispatch,
   } = useAppState();
 
   const form = useForm<IFormValue>({
-    initialValues: {
-      catalogues: [],
-      payment_from: '',
-      payment_to: '',
-      keyword: '',
-    },
+    initialValues: initFilterValue,
   });
 
-  useEffect(() => {  
+  useEffect(() => {
     function fetch() {
       dispatch(setParamsValue({ ids: [] }));
     }
-    fetch();  
-   fetch()
-  }, [dispatch])
+    fetch();
+  }, [dispatch]);
 
   return (
-    <div className='container'>
+    <div className="container">
       <Box className={classes.wrapper} mt={40}>
         <FilterForm form={form} />
         <Group className={classes.inner}>
-          <SearchField form={form}/>
-          {data?.objects.length ? (
-            <>
-              <VacancyCardList data={data.objects} />
-              <PaginationComponent />
-            </>
-          ) : 
-            (!isFetching && <NotFound isPage={false} />)}
-          
+          <SearchField form={form} />
+          <VacancyCardList data={data?.objects} />
+          <PaginationComponent />
+          {!isFetching && !data?.objects.length && <NotFound isPage={false} />}
         </Group>
       </Box>
     </div>

@@ -1,36 +1,32 @@
 import { Box, Group } from '@mantine/core';
-import { VacancyCardList } from 'components/CardList/CardList';
-import { PaginationComponent } from 'components/Pagination/Pagination';
+import { VacancyCardList, PaginationComponent } from 'components';
+import { DEFAULT_FILTER_PARAMS, initFilterValue } from 'constants/form';
 import { useEffect, useMemo } from 'react';
 import { setParamsValue, useAppState } from 'store';
-import { getInitialState } from 'utils/helpers';
 import { useFavouritesStyles } from './styles';
 
 const FavoritesPage = () => {
   const { classes } = useFavouritesStyles();
   const {
-    state: { data, favorites },
+    state: { data, favorites, isFetching },
     dispatch,
   } = useAppState();
+
+  useEffect(() => {
+    console.log(DEFAULT_FILTER_PARAMS)
+    dispatch(setParamsValue({ ...initFilterValue, ids: favorites.ids }));
+  }, [dispatch, favorites.ids]);
 
   const vacanciesData = useMemo(() => {
     return data?.objects.filter((vacancy) => favorites.ids.includes(vacancy.id));
   }, [data, favorites.ids]);
-
-  useEffect(() => {
-    function fetch() {
-      const ids = getInitialState();
-      dispatch(setParamsValue({ ids: ids }));
-    }
-    fetch();
-  }, [dispatch]);
 
   return (
     <div className="container">
       <Box className={classes.wrapper} mt={40}>
         <Group className={classes.inner}>
           <VacancyCardList data={vacanciesData} />
-          <PaginationComponent />
+         {!isFetching && <PaginationComponent />}
         </Group>
       </Box>
     </div>

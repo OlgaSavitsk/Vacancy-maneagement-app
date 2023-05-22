@@ -12,6 +12,7 @@ export const useFavouritesStyles = createStyles(() => ({
       padding: '0 1rem',
     },
     inner: {
+      position: 'relative',
       flexDirection: 'column',
       alignItems: 'start',
       flexGrow: 1,

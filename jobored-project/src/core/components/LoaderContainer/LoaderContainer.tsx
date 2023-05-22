@@ -12,6 +12,7 @@ export const LoaderContainer: FC<Props> = ({ isLoading, children }): JSX.Element
         visible={isLoading}
         overlayBlur={2}
         loaderProps={{ size: 'lg', variant: 'dots' }}
+        sx={{height: 'inherit'}}
       />
     );
   }

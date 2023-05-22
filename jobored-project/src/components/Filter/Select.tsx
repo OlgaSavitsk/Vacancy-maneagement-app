@@ -1,6 +1,6 @@
 import { Select } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
-import { getIndustryValue } from 'api/filter.service';
+import { getIndustryValue } from 'core/api/filter.service';
 import { FormProps } from 'core/models/form';
 import { IndustryInfo } from 'core/models/vacancy.model';
 import { useState, useEffect, useCallback } from 'react';
@@ -39,7 +39,7 @@ export const SelectComponent = ({ form, setSelectedValue }: SelectProps) => {
     <Select
       label="Отрасль"
       placeholder="Выберите отрасль"
-      
+      data-elem="industry-select"
       data={industryData.map((industry) => industry.title)}
       classNames={{ root: field, label: label, item: item, rightSection: rightSection }}
       rightSection={<IconChevronDown color={theme.colors.grey[0]} />}

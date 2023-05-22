@@ -1,10 +1,10 @@
-import { Card, Group, Image, Text } from '@mantine/core';
+import { Card, Group, MediaQuery, Text } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
+import { ModalDelete } from 'components';
 import { Paths } from 'constants/paths';
-import { VacancyInfo } from 'core/models/vacancy.model';
+import { VacancyInfo } from 'core';
 import { Link } from 'react-router-dom';
-import { addFavoriteId, useAppState } from 'store';
-import { renderVacancyPayment } from '../../utils/helpers';
+import { renderVacancyPayment } from 'utils';
 import { useCardVacancyStyles } from './styles';
 
 type VacancyProps = {
@@ -13,19 +13,9 @@ type VacancyProps = {
 };
 
 export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
-  const {
-    state: { favorites },
-    dispatch,
-  } = useAppState();
   const { classes, theme } = useCardVacancyStyles();
   const { id, profession, town, type_of_work, payment_to, payment_from, currency } =
     vacancy;
-
-  const handleFavorite = (id: number) => {
-    dispatch(addFavoriteId(id));
-  };
-
-  const isFavorite = favorites.ids.includes(id);
 
   return (
     <Card
@@ -35,6 +25,7 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
       mih={137}
       withBorder
       className={classes.card}
+      data-elem={`vacancy-${id}`}
     >
       <Group className={classes.link}>
         <Link to={`${Paths.vacancy}/${id}`}>
@@ -47,28 +38,33 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
             }}
           >
             <Group>
-              <Text
-                fw={isDetails ? 700 : 600}
-                color={isDetails ? theme.black : theme.colors.hover[1]}
-                fz={isDetails ? '1.75rem' : '1.25rem'}
-                lh={1.2}
-              >
-                {profession}
-              </Text>
+              <MediaQuery smallerThan="sm" styles={{ fontSize: '1.25rem', fontWeight: 600 }}>
+                <Text
+                  fw={isDetails ? 700 : 600}
+                  color={isDetails ? theme.black : theme.colors.hover[1]}
+                  fz={isDetails ? '1.75rem' : '1.25rem'}
+                  lh={1.2}
+                >
+                  {profession}
+                </Text>
+              </MediaQuery>
             </Group>
 
             <Group spacing={12}>
-              <Text
-                fw={isDetails ? 700 : 600}
-                fz={isDetails ? '1.25rem' : '1rem'}
-                lts={0.7}
-              >
-                з/п {renderVacancyPayment(payment_from, payment_to, currency)}
-              </Text>
+              <MediaQuery smallerThan="sm" styles={{ fontSize: '1rem', fontWeight: 600 }}>
+                <Text
+                  fw={isDetails ? 700 : 600}
+                  fz={isDetails ? '1.25rem' : '1rem'}
+                  lts={0.7}
+                >
+                  з/п {renderVacancyPayment(payment_from, payment_to, currency)}
+                </Text>
+              </MediaQuery>
               <Text size="1.125rem" c={theme.colors.grey[1]}>
                 &bull;
               </Text>
               <Text fw={400}>{type_of_work.title}</Text>
+
             </Group>
 
             <Group
@@ -86,20 +82,7 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
           </Group>
         </Link>
 
-        <Image
-          width={22}
-          src={isFavorite ? './starfill.svg' : './star.svg'}
-          alt="favourite"
-          onClick={() => handleFavorite(id)}
-          styles={() => ({
-            image: {
-              cursor: 'pointer',
-              '&:hover': {
-                filter: 'invert(.5) sepia(1) saturate(5) hue-rotate(175deg)',
-              },
-            },
-          })}
-        />
+        <ModalDelete id={id} />
       </Group>
     </Card>
   );

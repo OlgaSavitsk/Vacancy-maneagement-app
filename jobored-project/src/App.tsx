@@ -1,57 +1,18 @@
 import { useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Global, MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { HeaderMegaMenu } from 'components/Header/Header';
 import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
 import { headerLinks } from 'constants/header';
 import { Paths } from 'constants/paths';
 import { useStorage } from 'hooks/useLocalState';
-import { getAuthToken } from 'api/auth.service';
+import { getAuthToken, GuardedRoute } from 'core';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
 import { NotFound } from 'pages/NotFound/NotFound';
-import { GuardedRoute } from 'core/guards/vacancy.guard';
 import { AppProvider } from 'store';
 import Home from 'pages/Home/Home';
 import FavoritesPage from 'pages/Favourites/Favourites-page';
-
-function GlobalStyles() {
-  return (
-    <Global
-      styles={(theme) => ({
-        '*, *::before, *::after': {
-          boxSizing: 'border-box',
-        },
-        body: {
-          transition: 'all 1s ease-out',
-        },
-        '#root': {
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-
-          '& input': {
-            borderRadius: '0.5rem',
-          },
-        },
-        '.container': {
-          display: 'flex',
-          flex: '1 1 auto',
-          width: '100%',
-          background: theme.colors.grey[2],
-        },
-        ul: {
-          display: 'flex',
-          flexDirection: 'column',
-          listStyleType: 'none',
-        },
-        a: {
-          textDecoration: 'none',
-          color: theme.black
-        }
-      })}
-    />
-  );
-}
+import { GlobalStyles } from 'global.styles';
 
 function App() {
   const [token, setToken] = useStorage(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
@@ -78,15 +39,6 @@ function App() {
           hover: ['#92C1FF', '#5E96FC'],
           active: ['#5E96FC'],
           grey: ['#ACADB9', '#7B7C88', '#F7F7F8'],
-        },
-        headings: {
-          sizes: {
-            h4: {
-              fontWeight: 400,
-              fontSize: '1rem',
-              lineHeight: 1.25,
-            },
-          },
         },
         components: {
           Option: {

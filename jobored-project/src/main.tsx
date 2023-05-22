@@ -1,4 +1,4 @@
-import { ApiInterceptor } from 'api/api.interceptor'
+import { ApiInterceptor } from 'core/interceptors/api.interceptor'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'

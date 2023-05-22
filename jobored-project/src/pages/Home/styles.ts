@@ -13,10 +13,16 @@ export const useHomeStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column',
-      gap: '1rem'
+      gap: '1rem',
+      minHeight: '50%',
+      height: '100%',
+    },
+    [theme.fn.smallerThan('sx')]: {
+      minHeight: '50%',
     },
   },
   inner: {
+    position: 'relative',
     minHeight: '100%',
     flexDirection: 'column',
     alignItems: 'start',

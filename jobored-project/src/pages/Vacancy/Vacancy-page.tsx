@@ -1,8 +1,7 @@
 import { Box, Card, Group, TypographyStylesProvider } from '@mantine/core';
-import { getVacancy } from 'api/vacancy.service';
-import { VacancyCard } from 'components/Card/VacancyCard';
-import { LoaderContainer } from 'core/LoaderContainer/LoaderContainer';
-import { VacancyInfo } from 'core/models/vacancy.model';
+import { getVacancy } from 'core/api/vacancy.service';
+import { VacancyCard } from 'components';
+import { LoaderContainer, VacancyInfo } from 'core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppState } from 'store';

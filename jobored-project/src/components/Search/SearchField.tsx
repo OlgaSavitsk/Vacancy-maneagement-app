@@ -1,8 +1,8 @@
-import { Button, CloseButton, Group, rem, TextInput } from '@mantine/core';
+import { Button, CloseButton, Group, MediaQuery, rem, TextInput } from '@mantine/core';
 import { getHotkeyHandler } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { setParamsValue, useAppState } from 'store';
-import { FormProps } from 'core/models/form';
+import { FormProps } from 'core';
 
 export const SearchField = ({ form }: FormProps) => {
   const { dispatch } = useAppState();
@@ -12,25 +12,47 @@ export const SearchField = ({ form }: FormProps) => {
   };
 
   const resetSearchInput = () => {
-    form.setValues({ keyword: '' })
+    form.setValues({ keyword: '' });
   };
 
   return (
     <Group>
       <TextInput
         placeholder="Введите название вакансии"
+        data-elem="search-input"
         rightSection={
           <>
-            {form.values.keyword && <CloseButton aria-label="Close modal" iconSize={20} onClick={resetSearchInput} />}
-            <Button onClick={handleSearchInputClick} type="submit" radius="md" lts={1}>
-              Поиск
-            </Button>
+            {form.values.keyword && (
+              <MediaQuery smallerThan="xs" styles={{ display: 'none' }}>
+                <CloseButton
+                  aria-label="Close modal"
+                  iconSize={20}
+                  onClick={resetSearchInput}
+                />
+              </MediaQuery>
+            )}
+            <MediaQuery smallerThan="xs" styles={{ display: 'none' }}>
+              <Button
+                data-elem="search-button"
+                onClick={handleSearchInputClick}
+                type="submit"
+                radius="md"
+                lts={1}
+              >
+                Поиск
+              </Button>
+            </MediaQuery>
+            <MediaQuery smallerThan="xs" styles={{ color: 'blue' }}>
+              <IconSearch size="1rem" stroke={1.5} onClick={handleSearchInputClick} />
+            </MediaQuery>
           </>
         }
-        icon={<IconSearch size="1rem" stroke={1.5} />}
-        onKeyDown={getHotkeyHandler([
-          ['Enter', handleSearchInputClick],
-        ])}
+        icon={
+          <MediaQuery smallerThan="xs" styles={{ display: 'none' }}>
+            <IconSearch size="1rem" stroke={1.5} />
+          </MediaQuery>
+        }
+        onKeyDown={getHotkeyHandler([['Enter', handleSearchInputClick]])}
         styles={() => ({
           root: {
             flexGrow: 1,

@@ -2,8 +2,8 @@ import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { LocalStorageKey, DEFAULT_STORAGE_CONFIG } from 'constants/storage';
 import { useStorage } from 'hooks/useLocalState';
 import { useEffect } from 'react';
-import { getRefreshToken } from './auth.service';
-import { baseInstance } from './api-base.service';
+import { getRefreshToken } from '../api/auth.service';
+import { baseInstance } from '../api/api-base.service';
 
 interface InterceptorProps {
   children: JSX.Element;

@@ -13,6 +13,7 @@ export const SalaryInput = ({ form }: FormProps) => {
       <NumberInput
         label="Оклад"
         placeholder="От"
+        data-elem="salary-from-input"
         min={0}
         stepHoldDelay={500}
         stepHoldInterval={100}
@@ -28,6 +29,7 @@ export const SalaryInput = ({ form }: FormProps) => {
 
       <NumberInput
         placeholder="До"
+        data-elem="salary-to-input"
         min={0}
         stepHoldDelay={500}
         stepHoldInterval={100}

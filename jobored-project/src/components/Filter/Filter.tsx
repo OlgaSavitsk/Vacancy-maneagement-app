@@ -71,7 +71,7 @@ export const FilterForm = ({ form }: FormProps) => {
         <SalaryInput form={form} />
 
         <Group position="center" mt="lg">
-          <Button type="submit" fullWidth radius="md" h="2.5rem">
+          <Button type="submit" data-elem="search-button" fullWidth radius="md" h="2.5rem">
             Применить
           </Button>
         </Group>
