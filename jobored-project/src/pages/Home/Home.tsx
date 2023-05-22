@@ -8,28 +8,21 @@ import {
 } from 'components';
 import { initFilterValue } from 'constants/form';
 import { IFormValue } from 'core';
-import { NotFound } from 'pages/NotFound/NotFound';
-import { useEffect } from 'react';
-import { setParamsValue, useAppState } from 'store';
+import { lazy, Suspense } from 'react';
+import { useAppState } from 'store';
 import { useHomeStyles } from './styles';
+
+const NotFound = lazy(() => import('pages/NotFound/NotFound'));
 
 const Home = () => {
   const { classes } = useHomeStyles();
   const {
     state: { data, isFetching },
-    dispatch,
   } = useAppState();
 
   const form = useForm<IFormValue>({
     initialValues: initFilterValue,
   });
-
-  useEffect(() => {
-    function fetch() {
-      dispatch(setParamsValue({ ids: [] }));
-    }
-    fetch();
-  }, [dispatch]);
 
   return (
     <div className="container">
@@ -37,9 +30,11 @@ const Home = () => {
         <FilterForm form={form} />
         <Group className={classes.inner}>
           <SearchField form={form} />
-          <VacancyCardList data={data?.objects} />
+          <VacancyCardList data={data?.objects}/>
           <PaginationComponent />
-          {!isFetching && !data?.objects.length && <NotFound isPage={false} />}
+          <Suspense>
+            {!isFetching && !data?.objects.length && <NotFound isPage={false} />}
+          </Suspense>
         </Group>
       </Box>
     </div>

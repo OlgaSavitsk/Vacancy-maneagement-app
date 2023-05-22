@@ -17,7 +17,7 @@ export const ModalDelete = ({ id }: ModalProps) => {
 
   const handleFavorite = () => {
     dispatch(addFavoriteId(id));
-    close()
+    close();
   };
 
   return (

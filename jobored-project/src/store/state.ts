@@ -11,7 +11,7 @@ export interface AppState {
 
 export const InitialAppState: AppState = {
   data: undefined,
-  params: { ...DEFAULT_FILTER_PARAMS, ids: getInitialState() },
+  params: { ...DEFAULT_FILTER_PARAMS, ids: [] },
   favorites: {
     ids: getInitialState(),
   },

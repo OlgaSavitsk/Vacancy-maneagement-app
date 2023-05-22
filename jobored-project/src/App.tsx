@@ -8,7 +8,7 @@ import { Paths } from 'constants/paths';
 import { useStorage } from 'hooks/useLocalState';
 import { getAuthToken, GuardedRoute } from 'core';
 import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
-import { NotFound } from 'pages/NotFound/NotFound';
+import NotFound from 'pages/NotFound/NotFound';
 import { AppProvider } from 'store';
 import Home from 'pages/Home/Home';
 import FavoritesPage from 'pages/Favourites/Favourites-page';
@@ -102,6 +102,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppProvider>
+      
     </MantineProvider>
   );
 }

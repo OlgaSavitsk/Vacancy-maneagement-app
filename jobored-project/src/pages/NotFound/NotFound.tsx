@@ -6,7 +6,7 @@ interface NotFoundProps {
   isPage?: boolean;
 }
 
-export const NotFound = ({ isPage }: NotFoundProps) => {
+const NotFound = ({ isPage }: NotFoundProps) => {
   return (
     <div className="container">
       <Container size={327} mih={557} p={0} mt={isPage ? 120 : 20}>
@@ -33,3 +33,5 @@ export const NotFound = ({ isPage }: NotFoundProps) => {
     </div>
   );
 };
+
+export default NotFound
