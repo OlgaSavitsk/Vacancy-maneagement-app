@@ -1,12 +1,11 @@
 import { getVacancies } from 'core/api/vacancy.service';
 import { LocalStorageKey, DEFAULT_FAVORITES } from 'constants/storage';
 import { useStorage } from 'hooks/useLocalState';
-import { useReducer, useEffect, useCallback, useState } from 'react';
-import { ActionType, appReducer, InitialAppState, setData, VacancyContext, setParamsValue } from 'store';
+import { useReducer, useEffect, useCallback } from 'react';
+import { ActionType, appReducer, InitialAppState, setData, VacancyContext } from 'store';
 import { useLocation } from 'react-router-dom';
-import { DEFAULT_FILTER_PARAMS, initFilterValue } from 'constants/form';
+import { initFilterValue } from 'constants/form';
 import { getInitialState } from 'utils';
-import { Favorites, VacancyFilterParams } from 'core';
 
 interface Props {
   children: React.ReactNode;
