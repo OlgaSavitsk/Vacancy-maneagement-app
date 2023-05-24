@@ -30,7 +30,7 @@ export type VacancyFilterParams = {
 export type FilterParams = {
   page?: number;
   keyword?: string;
-  catalogues?: number[];
+  catalogues?: string[] | number[] | undefined;
   payment_from?: number | string;
   payment_to?: number | string;
   no_agreement?: number;

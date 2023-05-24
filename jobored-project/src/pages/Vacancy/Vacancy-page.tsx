@@ -1,11 +1,12 @@
-import { Box, Card, Group, TypographyStylesProvider } from '@mantine/core';
-import { getVacancy } from 'core/api/vacancy.service';
-import { VacancyCard } from 'components';
-import { LoaderContainer, VacancyInfo } from 'core';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Box, Card, Group, TypographyStylesProvider } from '@mantine/core';
+import { getVacancy } from 'core';
+import { VacancyCard } from 'components';
+import { LoaderContainer } from 'core';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppState } from 'store';
 import { useVacancyStyles } from './styles';
+import { VacancyInfo } from 'core/models';
 
 export const VacancyPage = () => {
   const { state } = useAppState();
@@ -25,11 +26,11 @@ export const VacancyPage = () => {
 
   const getVacancyDetails = useCallback(async () => {
     try {
-      const vacancyData = vacancy ? vacancy : await getVacancy(id!);
+      const vacancyData = vacancy || await getVacancy(id!);
       setVacancyData(vacancyData);
       renderVacancyDescript(vacancyData);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, [vacancy]);
 

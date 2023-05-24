@@ -1,8 +1,8 @@
 import { Card, Group, MediaQuery, Text } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { ModalDelete } from 'components';
-import { Paths } from 'constants/paths';
-import { VacancyInfo } from 'core';
+import { Paths } from 'constants/paths.constants';
+import { VacancyInfo } from 'core/models';
 import { Link } from 'react-router-dom';
 import { renderVacancyPayment } from 'utils';
 import { useCardVacancyStyles } from './styles';
@@ -38,7 +38,10 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
             }}
           >
             <Group>
-              <MediaQuery smallerThan="sm" styles={{ fontSize: '1.25rem', fontWeight: 600 }}>
+              <MediaQuery
+                smallerThan="sm"
+                styles={{ fontSize: '1.25rem', fontWeight: 600 }}
+              >
                 <Text
                   fw={isDetails ? 700 : 600}
                   color={isDetails ? theme.black : theme.colors.hover[1]}
@@ -64,7 +67,6 @@ export const VacancyCard = ({ vacancy, isDetails }: VacancyProps) => {
                 &bull;
               </Text>
               <Text fw={400}>{type_of_work.title}</Text>
-
             </Group>
 
             <Group

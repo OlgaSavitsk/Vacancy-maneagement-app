@@ -1,6 +1,6 @@
-import { Container, Group, Text, Image, Button } from '@mantine/core';
-import { Paths } from 'constants/paths';
 import { Link } from 'react-router-dom';
+import { Container, Group, Text, Image, Button } from '@mantine/core';
+import { Paths } from 'constants/paths.constants';
 
 interface NotFoundProps {
   isPage?: boolean;

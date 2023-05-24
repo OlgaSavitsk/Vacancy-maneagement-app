@@ -1,7 +1,8 @@
 import { Group, List } from '@mantine/core';
 import { VacancyCard } from 'components';
 import { useAppState } from 'store';
-import { VacancyInfo, LoaderContainer } from 'core';
+import { VacancyInfo } from 'core/models';
+import { LoaderContainer } from 'core';
 
 interface Props {
   data: VacancyInfo[] | undefined;

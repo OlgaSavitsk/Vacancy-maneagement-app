@@ -1,30 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Button, Group, CloseButton, Paper, Title } from '@mantine/core';
-import { useFilterStyles } from './styles';
 import { setParamsValue, useAppState } from 'store';
-import { AGREEMENT_VALUE } from 'constants/common.constants';
 import { SelectComponent } from './Select';
 import { SalaryInput } from './SalaryInput';
-import { FormProps, IFormValue } from 'core/models/form';
+import { FormProps, IFormValue } from 'core/models';
+import { useFilterStyles } from './styles';
+import { useCataloguesValue } from 'hooks/useCatalogues';
 
 export const FilterForm = ({ form }: FormProps) => {
   const { dispatch } = useAppState();
-  const [industryData, setIndustryData] = useState<number[] | undefined>([]);
+  const [, selectedIndustryKey] = useCataloguesValue({form})
   const { classes } = useFilterStyles();
 
-  const handleSubmit = async (values: IFormValue): Promise<void> => {
+  const handleSubmit = (values: IFormValue) => {
     try {
-      const params =
-        values.payment_from || values.payment_to ? AGREEMENT_VALUE : undefined;
       dispatch(
         setParamsValue({
           ...values,
-          catalogues: industryData,
-          no_agreement: params,
+          catalogues: selectedIndustryKey(),
         }),
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -35,11 +32,10 @@ export const FilterForm = ({ form }: FormProps) => {
         setParamsValue({
           ...form.values,
           catalogues: [],
-          no_agreement: undefined,
         }),
       );
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, []);
 
@@ -49,9 +45,14 @@ export const FilterForm = ({ form }: FormProps) => {
       p="lg"
       radius="md"
       withBorder
-      sx={{ alignSelf: 'start', minHeight: '360px', '@media (max-width: 755px)': {
-       maxWidth: '100%', width: '100%'
-      }, }}
+      sx={{
+        alignSelf: 'start',
+        minHeight: '360px',
+        '@media (max-width: 755px)': {
+          maxWidth: '100%',
+          width: '100%',
+        },
+      }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Group sx={{ display: 'flex', alignItems: 'start' }}>
@@ -67,11 +68,19 @@ export const FilterForm = ({ form }: FormProps) => {
           />
         </Group>
 
-        <SelectComponent form={form} setSelectedValue={(data) => setIndustryData(data)} />
+        <SelectComponent
+          form={form}
+        />
         <SalaryInput form={form} />
 
         <Group position="center" mt="lg">
-          <Button type="submit" data-elem="search-button" fullWidth radius="md" h="2.5rem">
+          <Button
+            type="submit"
+            data-elem="search-button"
+            fullWidth
+            radius="md"
+            h="2.5rem"
+          >
             Применить
           </Button>
         </Group>

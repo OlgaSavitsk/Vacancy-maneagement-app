@@ -1,11 +1,17 @@
-import { getVacancies } from 'core/api/vacancy.service';
-import { LocalStorageKey, DEFAULT_FAVORITES } from 'constants/storage';
-import { useStorage } from 'hooks/useLocalState';
 import { useReducer, useEffect, useCallback } from 'react';
-import { ActionType, appReducer, InitialAppState, setData, VacancyContext } from 'store';
 import { useLocation } from 'react-router-dom';
-import { initFilterValue } from 'constants/form';
-import { getInitialState } from 'utils';
+import { getVacancies, getIndustryValue } from 'core/api';
+import { LocalStorageKey, DEFAULT_FAVORITES } from 'constants/storage.constants';
+import { useStorage } from 'hooks/useLocalState';
+import {
+  ActionType,
+  appReducer,
+  InitialAppState,
+  setData,
+  setIndustryData,
+  VacancyContext,
+} from 'store';
+import { getParams } from 'utils';
 
 interface Props {
   children: React.ReactNode;
@@ -16,13 +22,13 @@ export const AppProvider = ({ children }: Props) => {
   const [, setIds] = useStorage(LocalStorageKey.favoritesId, DEFAULT_FAVORITES);
   const { pathname } = useLocation();
 
-  const getParams = () => {
-    return pathname === '/fav'
-      ? { ...initFilterValue, ids: getInitialState() }
-      : pathname === '/'
-        ? { ids: [] }
-        : state.params;
-  }
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getIndustryValue();
+      dispatch(setIndustryData(data));
+    };
+    fetch();
+  }, []);
 
   useEffect(() => {
     const { ids } = state.favorites;
@@ -31,16 +37,17 @@ export const AppProvider = ({ children }: Props) => {
 
   const fetchVacancies = useCallback(async () => {
     try {
-      const param = getParams()
       dispatch({ type: ActionType.Fetching, payload: true });
+      const param = getParams(pathname);
       const data = await getVacancies({ ...state.params, ...param });
       dispatch(setData(data));
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       dispatch({ type: ActionType.Fetching, payload: false });
     }
   }, [pathname, state.params]);
+
 
   useEffect(() => {
     fetchVacancies();

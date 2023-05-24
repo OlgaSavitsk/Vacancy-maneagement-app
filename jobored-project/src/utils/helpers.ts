@@ -1,5 +1,7 @@
-import { INIT_PAGE_QUANTITY, MAX_TOTAL, RECORDS_PER_PAGE } from 'constants/pagination';
-import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage';
+import { initFilterValue } from 'constants/form.constants';
+import { INIT_PAGE_QUANTITY, MAX_TOTAL, RECORDS_PER_PAGE } from 'constants/pagination.constants';
+import { Paths } from 'constants/paths.constants';
+import { DEFAULT_FAVORITES, LocalStorageKey } from 'constants/storage.constants';
 import { getStorageValue } from 'hooks/useLocalState';
 
 export const renderVacancyPayment = (
@@ -24,13 +26,21 @@ export const getInitialState = (): number[] => {
 export const renderPaginationPage = (totalVacancy: number, activePage: number) => {
   let total = INIT_PAGE_QUANTITY;
   if (activePage === INIT_PAGE_QUANTITY && totalVacancy > MAX_TOTAL) {
-    total = (MAX_TOTAL / RECORDS_PER_PAGE);
+    total = MAX_TOTAL / RECORDS_PER_PAGE;
   }
   if (activePage > INIT_PAGE_QUANTITY && totalVacancy > MAX_TOTAL) {
     total = MAX_TOTAL / RECORDS_PER_PAGE;
   }
   if (totalVacancy < INIT_PAGE_QUANTITY * RECORDS_PER_PAGE) {
     total = Math.ceil(totalVacancy / RECORDS_PER_PAGE);
-  } 
+  }
   return total;
+};
+
+export const getParams = (pathname: string) => {
+  return pathname === Paths.favourites
+    ? { ...initFilterValue, ids: getInitialState() }
+    : pathname === Paths.home
+    ? { ids: [] }
+    : null;
 };

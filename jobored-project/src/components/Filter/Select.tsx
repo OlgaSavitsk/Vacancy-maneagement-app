@@ -1,39 +1,22 @@
+import { useEffect } from 'react';
 import { Select } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
-import { getIndustryValue } from 'core/api/filter.service';
-import { FormProps } from 'core/models/form';
-import { IndustryInfo } from 'core/models/vacancy.model';
-import { useState, useEffect, useCallback } from 'react';
+import { FormProps } from 'core/models';
+import { useAppState } from 'store';
 import { useFilterStyles } from './styles';
 
-interface SelectProps extends FormProps {
-  setSelectedValue: (selectedValue: number[] | undefined) => void
-}
-
-export const SelectComponent = ({ form, setSelectedValue }: SelectProps) => {
-  const [industryData, setIndustryData] = useState<IndustryInfo[]>([]);
+export const SelectComponent = ({ form }: FormProps) => {
   const {
     classes: { field, label, item, rightSection },
     theme,
   } = useFilterStyles();
-
-  const selectedIndustryValue = useCallback((): number[] => {
-    return industryData
-      .filter((value: IndustryInfo) => form.values.catalogues.includes(value.title))
-      .map((val) => val.key);
-  }, [form.values.catalogues]);
+  const {
+    state: { industryData },
+  } = useAppState();
 
   useEffect(() => {
-    const fetch = async () => {
-      const data = await getIndustryValue();
-      setIndustryData(data);
-    };
-    fetch();
+    form.setValues({ catalogues: form.values.catalogues });
   }, []);
-
-  useEffect(() => {
-    setSelectedValue(selectedIndustryValue())
-  }, [selectedIndustryValue]);
 
   return (
     <Select

@@ -1,4 +1,4 @@
-import { Paths } from 'constants/paths';
+import { Paths } from 'constants/paths.constants';
 import { Navigate } from 'react-router-dom';
 import { useAppState } from 'store';
 

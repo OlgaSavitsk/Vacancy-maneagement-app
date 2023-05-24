@@ -1,7 +1,6 @@
 import { Group, NumberInput } from '@mantine/core';
-import { FormProps } from 'core/models/form';
+import { FormProps } from 'core/models';
 import { useFilterStyles } from './styles';
-
 
 export const SalaryInput = ({ form }: FormProps) => {
   const {

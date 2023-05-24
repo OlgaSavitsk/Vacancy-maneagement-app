@@ -20,6 +20,15 @@ export const PaginationComponent = () => {
   };
 
   useEffect(() => {
+    dispatch(
+      setParamsValue({
+        ...state.params,
+        page: 0,
+      }),
+    );
+  }, [])
+
+  useEffect(() => {
     function setPage() {
       if (state.data) {
         const total = renderPaginationPage(state.data.total, activePage);

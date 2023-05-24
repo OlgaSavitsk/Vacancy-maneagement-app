@@ -1,17 +1,20 @@
+import { useMemo } from 'react';
 import { Box, Group } from '@mantine/core';
 import { VacancyCardList, PaginationComponent } from 'components';
-import { useMemo } from 'react';
 import { useAppState } from 'store';
 import { useFavouritesStyles } from './styles';
+import { VacancyInfo } from 'core/models';
 
-const FavoritesPage = () => {
+export const FavoritesPage = () => {
   const { classes } = useFavouritesStyles();
   const {
     state: { data, favorites },
   } = useAppState();
 
   const vacanciesData = useMemo(() => {
-    return data?.objects.filter((vacancy) => favorites.ids.includes(vacancy.id));
+    return data?.objects.filter((vacancy: VacancyInfo) =>
+      favorites.ids.includes(vacancy.id),
+    );
   }, [data, favorites.ids]);
 
   return (
@@ -25,5 +28,3 @@ const FavoritesPage = () => {
     </div>
   );
 };
-
-export default FavoritesPage;

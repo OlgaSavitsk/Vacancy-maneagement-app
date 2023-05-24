@@ -1,18 +1,14 @@
 import { useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
+import { VacancyPage, FavoritesPage, Home } from 'pages';
 import { HeaderMegaMenu } from 'components/Header/Header';
-import { DEFAULT_STORAGE_CONFIG, LocalStorageKey } from 'constants/storage';
-import { headerLinks } from 'constants/header';
-import { Paths } from 'constants/paths';
 import { useStorage } from 'hooks/useLocalState';
 import { getAuthToken, GuardedRoute } from 'core';
-import { VacancyPage } from 'pages/Vacancy/Vacancy-page';
-import NotFound from 'pages/NotFound/NotFound';
-import { AppProvider } from 'store';
-import Home from 'pages/Home/Home';
-import FavoritesPage from 'pages/Favourites/Favourites-page';
 import { GlobalStyles } from 'global.styles';
+import { AppProvider } from 'store/provider';
+import { LocalStorageKey, DEFAULT_STORAGE_CONFIG, headerLinks, Paths } from 'constants/';
+import NotFound from 'pages/NotFound/NotFound';
 
 function App() {
   const [token, setToken] = useStorage(LocalStorageKey.authToken, DEFAULT_STORAGE_CONFIG);
@@ -23,7 +19,7 @@ function App() {
       const { access_token, refresh_token } = await getAuthToken();
       setToken({ access_token, refresh_token });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, [setToken, token]);
 
@@ -102,7 +98,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AppProvider>
-      
     </MantineProvider>
   );
 }

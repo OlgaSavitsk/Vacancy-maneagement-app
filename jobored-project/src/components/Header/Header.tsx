@@ -10,7 +10,7 @@ import {
   Paper,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Paths } from 'constants/paths';
+import { Paths } from 'constants/paths.constants';
 import { HeaderLinkProps } from 'core/models/header.model';
 import { Link, NavLink } from 'react-router-dom';
 import { useHeaderStyles } from './styles';

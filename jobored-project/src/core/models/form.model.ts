@@ -1,15 +1,15 @@
 import { UseFormReturnType } from "@mantine/form";
 
-interface IFormKeys {
-  [key: string]: string | number | string[];
+export interface IFormKeys {
+  [key: string]: string | number | string[] | undefined;
 }
 
 export interface IFormValue extends IFormKeys {
-  catalogues: string[];
+  catalogues: string[] | string | undefined;
   payment_from: number | string;
   payment_to: number | string;
   keyword: string
-  no_agreement: number
+  no_agreement: number | undefined
 }
 
 export type FormProps = {

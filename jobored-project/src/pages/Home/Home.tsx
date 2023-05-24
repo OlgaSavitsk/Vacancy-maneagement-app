@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect } from 'react';
 import { Box, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
@@ -6,15 +7,15 @@ import {
   PaginationComponent,
   SearchField,
 } from 'components';
-import { initFilterValue } from 'constants/form';
-import { IFormValue } from 'core';
-import { lazy, Suspense } from 'react';
+import { initFilterValue } from 'constants/form.constants';
+import { IFormValue } from 'core/models';
+import { useParams } from 'hooks/useSearchParams';
 import { useAppState } from 'store';
 import { useHomeStyles } from './styles';
 
 const NotFound = lazy(() => import('pages/NotFound/NotFound'));
 
-const Home = () => {
+export const Home = () => {
   const { classes } = useHomeStyles();
   const {
     state: { data, isFetching },
@@ -24,13 +25,19 @@ const Home = () => {
     initialValues: initFilterValue,
   });
 
+  const [setFilterParams] = useParams({ form });
+
+  useEffect(() => {
+    setFilterParams();
+  }, [setFilterParams]);
+
   return (
     <div className="container">
       <Box className={classes.wrapper} mt={40}>
         <FilterForm form={form} />
         <Group className={classes.inner}>
           <SearchField form={form} />
-          <VacancyCardList data={data?.objects}/>
+          <VacancyCardList data={data?.objects} />
           <PaginationComponent />
           <Suspense>
             {!isFetching && !data?.objects.length && <NotFound isPage={false} />}
@@ -41,4 +48,3 @@ const Home = () => {
   );
 };
 
-export default Home;

@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { LocalStorageKey, DEFAULT_STORAGE_CONFIG } from 'constants/storage';
+import { LocalStorageKey, DEFAULT_STORAGE_CONFIG } from 'constants/storage.constants';
 import { useStorage } from 'hooks/useLocalState';
 import { useEffect } from 'react';
 import { getRefreshToken } from '../api/auth.service';

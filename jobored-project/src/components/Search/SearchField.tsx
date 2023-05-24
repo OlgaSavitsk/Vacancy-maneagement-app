@@ -2,13 +2,20 @@ import { Button, CloseButton, Group, MediaQuery, rem, TextInput } from '@mantine
 import { getHotkeyHandler } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { setParamsValue, useAppState } from 'store';
-import { FormProps } from 'core';
+import { FormProps } from 'core/models';
+import { useCataloguesValue } from 'hooks/useCatalogues';
 
 export const SearchField = ({ form }: FormProps) => {
   const { dispatch } = useAppState();
+  const [, selectedIndustryKey] = useCataloguesValue({ form });
 
   const handleSearchInputClick = async (): Promise<void> => {
-    dispatch(setParamsValue({ keyword: form.values.keyword }));
+    dispatch(
+      setParamsValue({
+        ...form.values,
+        catalogues: selectedIndustryKey() as number[],
+      }),
+    );
   };
 
   const resetSearchInput = () => {

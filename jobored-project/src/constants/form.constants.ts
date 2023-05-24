@@ -1,6 +1,6 @@
-import { IFormValue } from 'core/models/form';
+import { IFormValue } from 'core/models/form.model';
 import { VacancyFilterParams } from 'core/models/vacancy.model';
-import { RECORDS_PER_PAGE } from './pagination';
+import { RECORDS_PER_PAGE } from './pagination.constants';
 
 export const initFilterValue: IFormValue = {
   catalogues: [],

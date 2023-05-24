@@ -1,16 +1,22 @@
-import { Favorites, FilterParams, VacancyData } from 'core/models/vacancy.model';
+import {
+  Favorites,
+  FilterParams,
+  IndustryInfo,
+  VacancyData,
+} from 'core/models/vacancy.model';
 
 export enum ActionType {
   SetData,
   Fetching,
   SetParams,
+  SetIndustryData,
   AddFavorites,
 }
 
-export interface SetParams {
+export type SetParams = {
   type: ActionType.SetParams;
   payload: FilterParams | Favorites;
-}
+};
 
 export interface AddFavorites {
   type: ActionType.AddFavorites;
@@ -20,6 +26,11 @@ export interface AddFavorites {
 export interface SetData {
   type: ActionType.SetData;
   payload: VacancyData;
+}
+
+export interface SetIndustryData {
+  type: ActionType.SetIndustryData;
+  payload: IndustryInfo[];
 }
 
 export interface Fetching {
@@ -42,4 +53,9 @@ export const setData = (data: VacancyData): SetData => ({
   payload: data,
 });
 
-export type AppAction = SetParams | AddFavorites | SetData | Fetching;
+export const setIndustryData = (data: IndustryInfo[]): SetIndustryData => ({
+  type: ActionType.SetIndustryData,
+  payload: data,
+});
+
+export type AppAction = SetParams | AddFavorites | SetData | SetIndustryData | Fetching;
