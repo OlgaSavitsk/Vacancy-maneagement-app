@@ -7,6 +7,6 @@ export default defineConfig({
     proxy: {
       '/api': 'https://api.superjob.ru/2.0/' 
     }
-  }
+  },
   plugins: [react(), tsconfigPaths()],
 });
