@@ -9,7 +9,7 @@ import { getRequest, baseInstance } from './api-base.service';
 
 export const getAuthToken = (): Promise<AuthResponse> => {
   return getRequest<AuthResponse>(
-    baseInstance.get<AuthResponse>(AUTH_PATH, {
+    baseInstance.get<AuthResponse>(`api/${AUTH_PATH}`, {
       params: {
         ...DEFAULT_AUTH_PARAMS,
       },
