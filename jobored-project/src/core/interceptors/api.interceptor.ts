@@ -16,7 +16,7 @@ export function ApiInterceptor({ children }: InterceptorProps): JSX.Element {
   );
 
   const createHeaderConfig = (config: InternalAxiosRequestConfig) => {
-    config.headers['Access-Control-Allow-Origin'] = 'https://jobored-app-e9d556.netlify.app';
+    config.headers['Access-Control-Allow-Origin'] = '*';
     config.headers['X-Api-App-Id'] = import.meta.env.VITE_API_CLIENT_SECRET;
     if (token.access_token) {
       config.headers['Authorization'] = `Bearer ${token.access_token}`;
