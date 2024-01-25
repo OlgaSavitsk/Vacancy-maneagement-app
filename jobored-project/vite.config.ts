@@ -5,7 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'https://api.superjob.ru/2.0/' 
+      '/api': {
+        target: 'https://api.superjob.ru/2.0', 
+      }
     }
   },
   plugins: [react(), tsconfigPaths()],
