@@ -10,7 +10,6 @@ import { getRequest, baseInstance } from './api-base.service';
 export const getAuthToken = (): Promise<AuthResponse> => {
   return getRequest<AuthResponse>(
     baseInstance.get<AuthResponse>(AUTH_PATH, {
-      crossdomain: true,
       params: {
         ...DEFAULT_AUTH_PARAMS,
       },
