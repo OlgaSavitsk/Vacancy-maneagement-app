@@ -11,7 +11,7 @@ export const DEFAULT_AUTH_REFRESH_PARAMS = {
   client_secret: DEFAULT_AUTH_PARAMS.client_secret,
 };
 
-export const AUTH_PATH = 'oauth2/password';
+export const AUTH_PATH = 'oauth2/password/';
 export const REFRESH_TOKEN_PATH = 'oauth2/refresh_token';
 
 export const VACANCY_API_PATH = 'vacancies/'
